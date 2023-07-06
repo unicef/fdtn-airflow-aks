@@ -44,7 +44,8 @@ export AIRFLOW_NAMESPACE="airflow-cluster"
 ```kubectl create ns "$AIRFLOW_NAMESPACE"```
 
 -- install using helm 3
-```helm install \
+```
+helm install \
   "$AIRFLOW_NAME" \
   airflow-stable/airflow \
   --namespace "$AIRFLOW_NAMESPACE" \
