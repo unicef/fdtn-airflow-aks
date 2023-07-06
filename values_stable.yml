@@ -1407,7 +1407,7 @@ dags:
     ##   # ssh git repo
     ##   repo: "git@github.com:USERNAME/REPOSITORY.git"
     ##
-    repo: "https://github.com/huruizverastegui/dags-aks.git"
+    repo: "https://github.com/unicef/fdtn-airflow-aks.git"
 
     ## the sub-path within your repo where dags are located
     ## - only dags under this path within your repo will be seen by airflow,
