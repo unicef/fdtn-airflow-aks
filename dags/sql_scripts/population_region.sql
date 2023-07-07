@@ -14,7 +14,7 @@ sum(population_crosstab.women_of_reproductive_age_15_49) AS women_of_reproductiv
 sum(population_crosstab.youth_15_24) AS youth_15_24, 
 sum(population_crosstab.general) AS general, 
 sum(schools.count) AS school_count ,
-sum(hopsitals.count) AS hospital_count 
+sum(hospitals.count) AS hospital_count 
 
 FROM population_crosstab 
 LEFT JOIN disasters_hex ON population_crosstab.h3_08 = disasters_hex.h3_08 
