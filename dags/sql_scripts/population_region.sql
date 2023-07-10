@@ -22,6 +22,7 @@ LEFT JOIN adm2_hex ON disasters_hex.h3_08 = adm2_hex.h3_08
 LEFT JOIN eapro_adm2 ON adm2_hex.gid2 = eapro_adm2."GID_2" 
 LEFT JOIN schools ON schools.h3_08 = adm2_hex.h3_08 
 LEFT JOIN hospitals ON hospitals.h3_08 = adm2_hex.h3_08 
+
 GROUP BY disasters_hex.event_id, adm2_hex.gid2, eapro_adm2."NAME_2" 
 ORDER BY children_under_five DESC 
 );
