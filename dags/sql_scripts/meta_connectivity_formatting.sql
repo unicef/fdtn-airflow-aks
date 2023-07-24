@@ -1,9 +1,9 @@
 -- Create disaster table if does not exists
 
-DROP TABLE IF EXISTS meta_connectivity_formatted;
+DROP TABLE IF EXISTS public.meta_connectivity_formatted;
 
 
-CREATE TABLE meta_connectivity_formatted as (
+CREATE TABLE public.meta_connectivity_formatted as (
 
 select event_id, h3_08, date_trunc('week', date) as week_start_date
 ,
@@ -28,12 +28,12 @@ select event_id, name, fromdate, todate, h3_08, data_type, date, value from
 (select d_hex.event_id, d.name, d.fromdate, d.todate, d_hex.h3_08 , mch.data_type, mch.date, mch.value, mch.meta_disaster_id,
 row_number() over(partition by d_hex.event_id,d_hex.h3_08,mch.data_type order by date desc) as rn
 
-from disasters_hex d_hex     
+from public.disasters_hex d_hex     
 
-left join disasters d 
+left join public.disasters d 
 on d_hex.event_id=d.event_id
 
-left join meta_connectivity_hex mch
+left join private.meta_connectivity_hex mch
 on d_hex.h3_08=mch.h3_08
 
 where TRUE 
@@ -49,4 +49,4 @@ where rn=1
 GROUP by 1,2,3)
 ;
 
-CREATE INDEX ON meta_connectivity_formatted(h3_08)
+CREATE INDEX ON public.meta_connectivity_formatted(h3_08)
