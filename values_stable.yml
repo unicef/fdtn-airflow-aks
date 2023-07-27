@@ -61,7 +61,9 @@ airflow:
   ##     # ether environment variables
   ##     HTTP_PROXY: "http://proxy.example.com:8080"
   ##
-  config: {}
+  config: 
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "False"
+
 
   ## a list of users to create
   ## - templates can ONLY be used in: `password`, `email`, `firstName`, `lastName`
