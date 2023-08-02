@@ -23,7 +23,5 @@ DELETE FROM disasters_hex_deduplicated where update_date<last_update;
 DELETE FROM disasters_hex_deduplicated where h3_08 is Null;
 ALTER TABLE disasters_hex_deduplicated DROP COLUMN last_update;
 
-TRUNCATE disasters_hex;
-INSERT INTO disasters_hex (select * from disasters_hex_deduplicated) ;
-
-DROP TABLE disasters_hex_deduplicated;
+DROP TABLE disasters_hex;
+ALTER TABLE disasters_hex_deduplicated RENAME TO disasters_hex
