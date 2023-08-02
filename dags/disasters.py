@@ -449,7 +449,8 @@ with DAG(
     start_date=datetime(2022,11,28),
     default_args=default_args,
     description='sitrep disasters',
-    schedule_interval='0 2 * * *',
+    #schedule not used for the moment as the DAGS run when airflow boots everymorning
+    #schedule_interval='0 2 * * *',
     # no need to catch up on the previous runs
     catchup=False
 ) as dag:
