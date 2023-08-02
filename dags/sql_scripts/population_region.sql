@@ -2,9 +2,9 @@
 -- coalesce to replace NULL by 0
 
 
-DROP TABLE IF EXISTS population_by_region;
+TRUNCATE population_by_region;
 
-CREATE TABLE population_by_region as (
+INSERT INTO population_by_region (
 SELECT disasters_hex.event_id ,
 adm2_hex.gid2 AS gid2,
 eapro_adm2."NAME_2" AS "NAME_2", 
