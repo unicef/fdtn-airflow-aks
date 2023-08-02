@@ -1,9 +1,8 @@
--- Create disaster table if does not exists
+-- TRUNCATE TABLE AND INSERT
 
-DROP TABLE IF EXISTS public.meta_connectivity_formatted;
+TRUNCATE public.meta_connectivity_formatted;
 
-
-CREATE TABLE public.meta_connectivity_formatted as (
+INSERT INTO public.meta_connectivity_formatted (
 
 select event_id, h3_08, date_trunc('week', date) as week_start_date
 ,
