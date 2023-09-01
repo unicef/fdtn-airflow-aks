@@ -527,6 +527,7 @@ with DAG(
         sql="sql_scripts/airflow_run_logs.sql"
         )
 
+    
 
         get_disasters_resources>>create_disasters_table>>fill_disasters_table>>disasters_deduplicate
         get_disasters_resources>>create_hex_table>>fill_hex_table>>collate_hex_table>>hex_deduplicate>>create_connectivity_table>>create_population_region_table>>fill_logs_table
