@@ -1,9 +1,3 @@
-from airflow import DAG 
-from airflow.operators.python import PythonOperator
-from airflow.operators.bash import BashOperator
-from airflow.providers.postgres.operators.postgres import PostgresOperator
-from datetime import date, datetime, timedelta
-from airflow.providers.postgres.hooks.postgres import PostgresHook
 import os
 import shutil
 import time
@@ -13,6 +7,25 @@ import re
 import pandas as pd
 import glob
 from urllib.parse import urlparse
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.keys import Keys
+from selenium.common import exceptions
+import sqlalchemy
+from sqlalchemy import create_engine
+import h3
+import datetime
+from datetime import date, datetime, timedelta
+from dateutil import parser
+from selenium.webdriver import ActionChains
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+import random 
+from random import randint 
+import getpass
+
 
 
 ## Arguments applied to the tasks, not the DAG in itself 
@@ -37,7 +50,7 @@ with DAG(
     dag_id='sitrep_scrapper_connectivity',
     start_date=datetime(2022,11,28),
     default_args=default_args,
-    description='sitrep disasters',
+    description='sitrep scrapper connectivity',
     #schedule not used for the moment as the DAGS run when airflow boots everymorning
     #schedule_interval='0 2 * * *',
     # no need to catch up on the previous runs
