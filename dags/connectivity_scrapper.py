@@ -15,6 +15,14 @@ import glob
 from urllib.parse import urlparse
 
 
+## Arguments applied to the tasks, not the DAG in itself 
+default_args={
+    'owner':'airflow',
+    'email_on_failure': False,
+    'email_on_retry':False,
+    'retries':2,
+    'retry_delay': timedelta(minutes=1)
+}
 
 loginURL='https://www.facebook.com'
 loginName=os.getenv('META_LOGIN')
