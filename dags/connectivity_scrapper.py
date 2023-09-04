@@ -24,7 +24,6 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import random 
 from random import randint 
-import getpass
 
 
 
