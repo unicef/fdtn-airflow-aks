@@ -1,3 +1,10 @@
+
+
+from airflow import DAG
+from airflow.operators.python import PythonOperator
+from airflow.operators.bash import BashOperator
+from airflow.providers.postgres.operators.postgres import PostgresOperator
+
 import os
 import shutil
 import time
