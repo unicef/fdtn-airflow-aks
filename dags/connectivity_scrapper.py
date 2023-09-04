@@ -35,8 +35,8 @@ import getpass
 
 
 loginURL='https://www.facebook.com'
-loginName=${{ secrets.META_LOGIN }}
-loginPass=${{ secrets.META_PASSWORD }}
+loginName=os.getenv('META_LOGIN')
+loginPass=os.getenv('META_PASSWORD')
 
 capabilities = {'browserName': 'chrome'}
 
