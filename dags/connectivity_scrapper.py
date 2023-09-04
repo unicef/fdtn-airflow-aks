@@ -20,5 +20,25 @@ loginURL='https://www.facebook.com'
 loginName=os.getenv('META_LOGIN')
 loginPass=os.getenv('META_PASSWORD')
 
-print(loginName)     
+def test:
+    print(loginName)     
+
+
+with DAG(
+    ## MANDATORY 
+    dag_id='sitrep_scrapper_connectivity',
+    start_date=datetime(2022,11,28),
+    default_args=default_args,
+    description='sitrep disasters',
+    #schedule not used for the moment as the DAGS run when airflow boots everymorning
+    #schedule_interval='0 2 * * *',
+    # no need to catch up on the previous runs
+    catchup=False
+) as dag:
+
+        test = PythonOperator(
+            task_id="get_disasters_resources",
+            python_callable=test
+            )
+
     
