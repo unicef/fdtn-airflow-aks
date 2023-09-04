@@ -20,7 +20,7 @@ loginURL='https://www.facebook.com'
 loginName=os.getenv('META_LOGIN')
 loginPass=os.getenv('META_PASSWORD')
 
-def test:
+def test():
     print(loginName)     
 
 
