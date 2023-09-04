@@ -181,7 +181,8 @@ def login(driver, loginURL, loginName, loginPass):
     submit.click()
     random_sleep(5)
     driver.save_screenshot('screenshot.png')
+    print("Logged in.")
 
 login(driver, loginURL, loginName, loginPass)
     
-    print("Logged in.")
+    
