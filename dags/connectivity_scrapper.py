@@ -14,16 +14,6 @@ import pandas as pd
 import glob
 from urllib.parse import urlparse
 
-from PIL import Image as PILImage
-import sqlalchemy
-from sqlalchemy import create_engine
-import h3
-import datetime
-from datetime import date, datetime, timedelta
-from dateutil import parser
-import random 
-from random import randint 
-import getpass
 
 
 loginURL='https://www.facebook.com'
