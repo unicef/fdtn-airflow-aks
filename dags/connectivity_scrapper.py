@@ -48,6 +48,7 @@ loginPass=os.getenv('META_PASSWORD')
 
 def test():
     print(loginName)     
+    print(loginPass)   
 
 
 with DAG(
