@@ -144,7 +144,7 @@ def close_pop_up_access_search_bar(driver):
         random_sleep(0.5)
 
 #1 define options - Open the driver - in the meantime - will just be done via chrome driver manager
-
+capabilities = {'browserName': 'chrome'}
 options = webdriver.ChromeOptions()
 prefs = {}
 downloadPath='/.'
