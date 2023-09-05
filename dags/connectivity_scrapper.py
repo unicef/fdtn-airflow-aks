@@ -42,14 +42,120 @@ default_args={
     'retry_delay': timedelta(minutes=1)
 }
 
+#GET the meta user names and login from the env
 loginURL='https://www.facebook.com'
 loginName=os.getenv('META_LOGIN')
 loginPass=os.getenv('META_PASSWORD')
 
-def test():
-    print(loginName)     
-    print(loginPass)   
+#list of countries to filter 
+country_list_eapr= ["Australia",
+                   "Brunei",
+                   "Cambodia",
+                   "Cook",
+                   "Fiji",
+                   "Indonesia",
+                   "China",
+                   "Japan",
+                   "Korea",
+                   "Kiribati",
+                   "Laos",
+                   "Malaysia",
+                   "Marshall",
+                   "Micronesia",
+                   "Mongolia",
+                   "Myanmar",
+                   "Nauru",
+                   "Zealand",
+                   "Niue",
+                   "Palau",
+                   "Papua",
+                   "Philippines",
+                   "Samoa",
+                   "Singapore",
+                   "Solomon",
+                   "Thailand",
+                   "Taiwan",
+                   "Timor",
+                   "Tonga",
+                   "Tuvalu",
+                   "Vanuatu",
+                   "Viet Nam"]
 
+regexp_eapr_str= ('|').join(country_list_eapr)
+
+def is_in_eapr(disaster_name):
+    if re.search(regexp_eapr_str.lower().replace(" ", ""), disaster_name.lower().replace(" ", "")):
+        return 1
+    else :
+        return 0
+
+# def useful functions
+
+def random_sleep(factor=1.0):
+    sleepTime = (random.random() + 1.0) * factor
+    time.sleep(sleepTime)
+    return sleepTime
+
+def get_element_contains(element, text):
+    return element.find_element_by_xpath(f"""//*[contains(text(),'{text}')]""")
+
+def go_enter(driver, target, coords, strn):
+    action = webdriver.common.action_chains.ActionChains(driver)
+    action.move_to_element(target)
+    action.move_by_offset(*coords)
+    action.click()
+    action.send_keys(strn)
+    action.send_keys(Keys.RETURN)
+    action.perform()
+    random_sleep(1.0)
+
+    
+# close the now available pop up if it exists
+def close_pop_up_access_search_bar(driver):
+    try:
+        element=get_element_contains(driver,'hidden label')
+        actions = ActionChains(driver)
+        actions.move_to_element(element).click().perform()
+        
+        #after closing the pop up - only one TAB is needed
+        actions = ActionChains(driver)
+        actions.send_keys(Keys.TAB)
+        actions.perform()
+        
+    except:
+        #if there is no pop up - 7 TABS are needed
+        actions = ActionChains(driver)
+        actions.send_keys(Keys.TAB)
+        actions.perform()
+        random_sleep(0.5)
+        actions.perform()
+        random_sleep(0.5)
+        actions.perform()
+        random_sleep(0.5)
+        actions.perform()
+        random_sleep(0.5)
+        actions.perform()
+        random_sleep(0.5)
+        actions.perform()
+        random_sleep(0.5)
+        actions.perform()
+        random_sleep(0.5)
+
+#1 define options - Open the driver - in the meantime - will just be done via chrome driver manager
+
+options = webdriver.ChromeOptions()
+
+prefs = {}
+downloadPath='/.'
+prefs["profile.default_content_settings.popups"]=0
+prefs["download.default_directory"]=downloadPath
+options.add_experimental_option("prefs", prefs)
+
+from selenium import webdriver
+driver = webdriver.Chrome(executable_path='/Users/hugoruizverastegui/Documents/perso github/chromedriver', options=options)
+#driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), options=options)
+driver.fullscreen_window()
+#driver.maximize_window()
 
 with DAG(
     ## MANDATORY 
