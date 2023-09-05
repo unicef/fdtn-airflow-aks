@@ -48,8 +48,8 @@ loginName=os.getenv('META_LOGIN')
 loginPass=os.getenv('META_PASSWORD')
 
 #GET POSTGRES INFO
-#password_postgres=os.getenv('XXX')
-#login_postgres=os.getenv('XXX')
+password_postgres=os.getenv('POSTGRES_PASSWORD')
+login_postgres=os.getenv('POSTGRES_LOGIN')
 
 vm_public_ip=os.getenv('VM_PUBLIC_IP')
 
