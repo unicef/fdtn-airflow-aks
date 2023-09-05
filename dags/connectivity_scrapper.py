@@ -111,7 +111,6 @@ def go_enter(driver, target, coords, strn):
     action.perform()
     random_sleep(1.0)
 
-    
 # close the now available pop up if it exists
 def close_pop_up_access_search_bar(driver):
     try:
@@ -161,7 +160,6 @@ def login(driver, loginURL, loginName, loginPass):
     except exceptions.WebDriverException:
         raise ValueError("No login page found!")
     print("Navigated to login page.")
-
     print("Logging in...")
 
     random_sleep(0.5)
@@ -173,17 +171,78 @@ def login(driver, loginURL, loginName, loginPass):
     random_sleep(0.2)
     
     submit = driver.find_element_by_name("login")
-       
     submit.click()
     random_sleep(5)
     
     print("Logged in.")
 
+def get_datasets(driver):
+    searchstr='Network Coverage Map'
+
+    #3 - Open the data for good page
+    dataUrl='https://partners.facebook.com/data_for_good/data/?partner_id=3884468314953904'
+    driver.get(dataUrl)
+    random_sleep(5)
+
+    #4 - Search for the dataset type we are interested in 
+    #inc ase this does not work - typing tabs 8 times also does the trick - but dirty
+    #close pop up and go to the search bar to select the dataset type we need
+    close_pop_up_access_search_bar(driver)
+
+    #5 type the dataset type 
+    actions = ActionChains(driver)
+    actions.send_keys(searchstr)
+    random_sleep(0.5)
+    actions.send_keys(Keys.ENTER)
+    actions.perform()
+    driver.fullscreen_window()
+    driver.maximize_window()
+
+    #6 - Get the list of all the datasets 
+    # press tab 10 times in a row and wait for3 seconds and then press the down key 
+    #driver.maximize_window()
+    #define the action
+
+    actions = ActionChains(driver)
+    actions.send_keys(Keys.TAB)
+    actions.send_keys(Keys.TAB)
+    actions.send_keys(Keys.TAB)
+    actions.send_keys(Keys.TAB)
+    actions.send_keys(Keys.TAB)
+    actions.send_keys(Keys.TAB)
+    actions.send_keys(Keys.TAB)
+    actions.send_keys(Keys.TAB)
+    actions.send_keys(Keys.TAB)
+    actions.send_keys(Keys.TAB)
+
+    random_sleep(1)
+    actions.perform()
+
+    actions = ActionChains(driver)
+    actions.send_keys(Keys.ARROW_DOWN)
+    #repeat the action 500 times
+    i=0
+    while i<500:
+        random_sleep(0.2)
+        actions.perform()
+        i=i+1
+
+    random_sleep(3)
+    htmlsource=driver.page_source
+    htmlsource
+
+    regexp_dataset_id="end_date\"><input type=\"hidden\" value=\"(.*?)\" name=\"dataset_id"
+    dataset_id_list = re.findall(regexp_dataset_id, htmlsource)
+    return dataset_id_list
+
+
 def test():
     driver = webdriver.Remote(command_executor = vm_public_ip, desired_capabilities = capabilities, options= options)
     driver.fullscreen_window()
     login(driver, loginURL, loginName, loginPass)
-    
+    dataset_list=get_datasets(driver)
+    print(dataset_list)
+    return dataset_list
 
 with DAG(
     ## MANDATORY 
