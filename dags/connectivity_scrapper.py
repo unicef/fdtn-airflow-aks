@@ -146,7 +146,7 @@ def close_pop_up_access_search_bar(driver):
 capabilities = {'browserName': 'chrome'}
 options = webdriver.ChromeOptions()
 prefs = {}
-downloadPath='/.'
+downloadPath='./selenium_download'
 prefs["profile.default_content_settings.popups"]=0
 prefs["download.default_directory"]=downloadPath
 options.add_experimental_option("prefs", prefs)
