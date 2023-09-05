@@ -47,6 +47,8 @@ loginURL='https://www.facebook.com'
 loginName=os.getenv('META_LOGIN')
 loginPass=os.getenv('META_PASSWORD')
 
+vm_public_ip=os.getenv('VM_PUBLIC_IP')
+
 #list of countries to filter 
 country_list_eapr= ["Australia",
                    "Brunei",
@@ -144,18 +146,44 @@ def close_pop_up_access_search_bar(driver):
 #1 define options - Open the driver - in the meantime - will just be done via chrome driver manager
 
 options = webdriver.ChromeOptions()
-
 prefs = {}
 downloadPath='/.'
 prefs["profile.default_content_settings.popups"]=0
 prefs["download.default_directory"]=downloadPath
 options.add_experimental_option("prefs", prefs)
 
-from selenium import webdriver
-driver = webdriver.Chrome(executable_path='/Users/hugoruizverastegui/Documents/perso github/chromedriver', options=options)
-#driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), options=options)
-driver.fullscreen_window()
-#driver.maximize_window()
+
+#2 login into facebook
+def login(driver, loginURL, loginName, loginPass):
+    print("Navigating to login page...")
+    try:
+        driver.get(loginURL)
+    except exceptions.WebDriverException:
+        raise ValueError("No login page found!")
+    print("Navigated to login page.")
+
+    print("Logging in...")
+
+    random_sleep(0.5)
+    username = driver.find_element_by_id("email")
+    password = driver.find_element_by_id("pass")
+    username.send_keys(loginName)
+    random_sleep(0.2)
+    password.send_keys(loginPass)
+    random_sleep(0.2)
+    
+    submit = driver.find_element_by_name("login")
+       
+    submit.click()
+    random_sleep(5)
+    
+    print("Logged in.")
+
+def test():
+    driver = webdriver.Remote(command_executor = vm_punlic_ip, desired_capabilities = capabilities, options= options)
+    driver.fullscreen_window()
+    login(driver, loginURL, loginName, loginPass)
+    
 
 with DAG(
     ## MANDATORY 
@@ -170,8 +198,8 @@ with DAG(
 ) as dag:
 
         test = PythonOperator(
-            task_id="get_disasters_resources",
-            python_callable=test
+            task_id="login",
+            python_callable= test
             )
 
     
