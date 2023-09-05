@@ -180,7 +180,7 @@ def login(driver, loginURL, loginName, loginPass):
     print("Logged in.")
 
 def test():
-    driver = webdriver.Remote(command_executor = vm_punlic_ip, desired_capabilities = capabilities, options= options)
+    driver = webdriver.Remote(command_executor = vm_public_ip, desired_capabilities = capabilities, options= options)
     driver.fullscreen_window()
     login(driver, loginURL, loginName, loginPass)
     
