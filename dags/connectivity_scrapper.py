@@ -560,7 +560,7 @@ def test():
     login(driver, loginURL, loginName, loginPass)
     dataset_id_list=get_datasets(driver)
     print(dataset_id_list)
-    scrape(['6588572354558227','326273996438149','1711987435984233'])
+    scrape(['646503847464491','6489118237845239'])
 
 with DAG(
     ## MANDATORY 
