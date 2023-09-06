@@ -177,6 +177,9 @@ def login(driver, loginURL, loginName, loginPass):
     submit = driver.find_element_by_name("login")
     submit.click()
     random_sleep(5)
+
+    htmlsource=driver.page_source
+    print(re.findall('logout.php', htmlsource))
     
     print("Logged in.")
 
