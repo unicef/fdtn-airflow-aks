@@ -551,8 +551,8 @@ def test():
     driver = webdriver.Remote(command_executor = vm_public_ip, desired_capabilities = capabilities, options= options)
     driver.fullscreen_window()
     login(driver, loginURL, loginName, loginPass)
-    dataset_list=get_datasets(driver)
-    print(dataset_list)
+    dataset_id_list=get_datasets(driver)
+    print(dataset_id_list)
     scrape(dataset_id_list)
 
 with DAG(
