@@ -526,7 +526,7 @@ def scrape(dataset_id_list):
                 engine = create_engine(f'postgresql://{login_postgres}:{password_postgres}@postgres-fdtn.postgres.database.azure.com:5432/postgres')
                 print('engine created')
     
-                df_concat_hex.to_sql('meta_connectivity_hex_test', if_exists='append' ,schema='private',con=engine,chunksize=500000, method='multi', index=False)
+                df_concat_hex.to_sql('meta_connectivity_hex_test_dag', if_exists='append' ,schema='private',con=engine,chunksize=500000, method='multi', index=False)
                 print('df_concat_hex - saved into postgres')
                 #save into postgres connectivity_disaster
                 # only if there is a new disaster
@@ -535,7 +535,7 @@ def scrape(dataset_id_list):
                     df_concat_disaster=df_concat[['meta_disaster_name','meta_disaster_id']].groupby(['meta_disaster_name','meta_disaster_id']).count()
                     print(df_concat_disaster)
     
-                    df_concat_disaster.to_sql('meta_connectivity_disaster_test', if_exists='append',schema='private',con=engine,chunksize=500000, method='multi')
+                    df_concat_disaster.to_sql('meta_connectivity_disaster_test_dag', if_exists='append',schema='private',con=engine,chunksize=500000, method='multi')
                     print('df_concat_disaster - saved into postgres')
     
             #randomly regenerate a new browser to avoid detection by meta and re login 
@@ -560,7 +560,7 @@ def test():
     login(driver, loginURL, loginName, loginPass)
     dataset_id_list=get_datasets(driver)
     print(dataset_id_list)
-    scrape(dataset_id_list)
+    scrape(['6588572354558227','326273996438149','1711987435984233'])
 
 with DAG(
     ## MANDATORY 
