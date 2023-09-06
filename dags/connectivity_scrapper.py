@@ -123,6 +123,8 @@ def close_pop_up_access_search_bar(driver):
         actions.move_to_element(element).click().perform()
         random_sleep(0.5)
         driver.fullscreen_window()
+        
+        
     except:
         pass
     
@@ -142,6 +144,7 @@ def close_pop_up_access_search_bar(driver):
     random_sleep(0.5)
     actions.perform()
     random_sleep(0.5)
+
 
 #1 define options - Open the driver - in the meantime - will just be done via chrome driver manager
 capabilities = {'browserName': 'chrome'}
