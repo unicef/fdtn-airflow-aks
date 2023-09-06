@@ -177,6 +177,9 @@ def login(driver, loginURL, loginName, loginPass):
     submit = driver.find_element_by_name("login")
     submit.click()
     random_sleep(5)
+
+    htmlsource=driver.page_source
+    print(htmlsource)
     
     print("Logged in.")
 
@@ -187,6 +190,10 @@ def get_datasets(driver):
     dataUrl='https://partners.facebook.com/data_for_good/data/?partner_id=3884468314953904'
     driver.get(dataUrl)
     random_sleep(5)
+
+    print('on the dataset page')
+    htmlsource=driver.page_source
+    print(htmlsource)
 
     #4 - Search for the dataset type we are interested in 
     #inc ase this does not work - typing tabs 8 times also does the trick - but dirty
