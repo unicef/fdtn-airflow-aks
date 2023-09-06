@@ -177,9 +177,6 @@ def login(driver, loginURL, loginName, loginPass):
     submit = driver.find_element_by_name("login")
     submit.click()
     random_sleep(5)
-
-    htmlsource=driver.page_source
-    print(htmlsource)
     
     print("Logged in.")
 
@@ -193,7 +190,7 @@ def get_datasets(driver):
 
     print('on the dataset page')
     htmlsource=driver.page_source
-    print(htmlsource)
+    print(re.findall('Data for Good at Meta Portal', htmlsource))
 
     #4 - Search for the dataset type we are interested in 
     #inc ase this does not work - typing tabs 8 times also does the trick - but dirty
