@@ -237,7 +237,6 @@ def get_datasets(driver):
 
     random_sleep(3)
     htmlsource=driver.page_source
-    htmlsource
 
     regexp_dataset_id="end_date\"><input type=\"hidden\" value=\"(.*?)\" name=\"dataset_id"
     dataset_id_list = re.findall(regexp_dataset_id, htmlsource)
