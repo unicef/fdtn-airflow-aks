@@ -376,8 +376,7 @@ def scrape(dataset_id_list):
         random_sleep(2)
     
         # get the disaster name 
-        htmlsource=driver.page_source
-        print(htmlsource)
+        
         regexp_disaster_name="div aria-level=\"2.*?\" role=\"heading\">(.*?)<\/div><span class=\""
         try:
             disaster_name= re.findall(regexp_disaster_name, htmlsource)[0]
