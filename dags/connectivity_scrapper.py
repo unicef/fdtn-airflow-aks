@@ -383,8 +383,10 @@ def scrape(dataset_id_list):
             disaster_name= re.findall(regexp_disaster_name, htmlsource)[0]
         except:
             disaster_name=''
+            print(htmlsource)
         print('disaster name: ' +disaster_name)
-    
+        
+        
         # once we have the disaster name - check if it's in the EAPR region
         # if not move to the next disaster and stop the computing
     
@@ -580,7 +582,7 @@ def test():
     
     dataset_id_list=get_datasets(driver)
     print(dataset_id_list)
-    scrape(dataset_id_list)
+    scrape(dataset_id_list[0:4])
 
 
 
