@@ -270,7 +270,7 @@ def get_already_downloaded():
 
 
 
-def download_csvs(driver,datatype):
+def download_csvs(driver,datatype,dataset_id):
     random_sleep(1)
     htmlsource=driver.page_source
     random_sleep(1)
@@ -416,7 +416,7 @@ def scrape(dataset_id_list):
             if datatype_from_regexp=='Probability':
                 datatype='p_connectivity'
     
-            df_concat=download_csvs(driver,datatype)
+            df_concat=download_csvs(driver,datatype,dataset_id)
             print('concat ok for 1st type')
     
             # then for the undetected 
@@ -459,7 +459,7 @@ def scrape(dataset_id_list):
             if datatype_from_regexp=='Probability':
                 datatype='p_connectivity'
     
-            df_concat=pd.concat([df_concat,download_csvs(driver,datatype)])
+            df_concat=pd.concat([df_concat,download_csvs(driver,datatype,dataset_id)])
             print('concat ok for 2nd type')
             #print(len(df_concat))
     
@@ -504,7 +504,7 @@ def scrape(dataset_id_list):
             if datatype_from_regexp=='Probability':
                 datatype='p_connectivity'
     
-            df_concat=pd.concat([df_concat,download_csvs(driver,datatype)])
+            df_concat=pd.concat([df_concat,download_csvs(driver,datatype,dataset_id)])
             print('concat ok for 3rd type')
             #print(len(df_concat))
     
