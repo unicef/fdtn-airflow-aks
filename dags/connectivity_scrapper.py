@@ -571,7 +571,7 @@ def test():
     image = mpimg.imread("screenshot_login.png")
     plt.imshow(image)
     plt.show()
-    
+    print(plt.show())    
     #dataset_id_list=get_datasets(driver)
     #print(dataset_id_list)
     #scrape(['1650701188746310'])
