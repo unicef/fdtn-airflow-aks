@@ -55,8 +55,8 @@ loginPass=os.getenv('META_PASSWORD')
 password_postgres=os.getenv('POSTGRES_PASSWORD')
 login_postgres=os.getenv('POSTGRES_LOGIN')
 
-vm_public_ip=os.getenv('VM_PUBLIC_IP')
-
+#vm_public_ip=os.getenv('VM_PUBLIC_IP')
+vm_public_ip='http://172.172.230.100:4444'
 #list of countries to filter 
 country_list_eapr= ["Australia",
                    "Brunei",
