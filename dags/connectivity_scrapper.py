@@ -163,10 +163,8 @@ options.add_experimental_option("prefs", prefs)
 #2 login into facebook
 def login(driver, loginURL, loginName, loginPass):
     print("Navigating to login page...")
-    try:
-        driver.get(loginURL)
-    except exceptions.WebDriverException:
-        raise ValueError("No login page found!")
+    driver.get(loginURL)
+
     print("Navigated to login page.")
     print("Logging in...")
 
