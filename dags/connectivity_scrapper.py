@@ -182,7 +182,7 @@ def login(driver, loginURL, loginName, loginPass):
 
     htmlsource=driver.page_source
     print(re.findall('logout.php', htmlsource))
-    
+    print('---code source---' + htmlsource)    
     print("Logged in.")
 
 def get_datasets(driver):
