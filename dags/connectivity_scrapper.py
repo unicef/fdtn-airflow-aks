@@ -562,6 +562,7 @@ def scrape(dataset_id_list):
 
 
 def test():
+    options.add_argument("--headless")
     driver = webdriver.Remote(command_executor = vm_public_ip, desired_capabilities = capabilities, options= options)
     driver.fullscreen_window()
     login(driver, loginURL, loginName, loginPass)
