@@ -276,7 +276,7 @@ def download_csvs(driver,datatype):
     random_sleep(1)
     
     # get the disaster name 
-    regexp_disaster_name="div aria-level=\"2.*?\" role=\"heading\">(.*?)<\/div><span class=\""
+    regexp_disaster_name="div aria-level=\"2.*?\" role=\"heading\">(.*?)<\/div>"
     try:
         disaster_name= re.findall(regexp_disaster_name, htmlsource)[0]
     except:
