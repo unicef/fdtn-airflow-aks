@@ -580,7 +580,7 @@ def test():
     
     dataset_id_list=get_datasets(driver)
     print(dataset_id_list)
-    #scrape(['1650701188746310'])
+    scrape(dataset_id_list)
 
 
 
