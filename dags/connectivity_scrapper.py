@@ -48,8 +48,12 @@ default_args={
 
 #GET the meta user names and login from the env
 loginURL='https://www.facebook.com'
-loginName=os.getenv('META_LOGIN')
-loginPass=os.getenv('META_PASSWORD')
+
+#loginName=os.getenv('META_LOGIN')
+#loginPass=os.getenv('META_PASSWORD')
+
+loginName='huruiz@unicef.org'
+loginPass='testunicef'
 
 #GET POSTGRES INFO
 password_postgres=os.getenv('POSTGRES_PASSWORD')
