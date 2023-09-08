@@ -31,6 +31,10 @@ from selenium.webdriver.common.action_chains import ActionChains
 import random 
 from random import randint 
 
+import matplotlib 
+from matplotlib import pyplot as plt
+from matplotlib import image as mpimg
+
 
 
 ## Arguments applied to the tasks, not the DAG in itself 
@@ -561,9 +565,15 @@ def test():
     driver = webdriver.Remote(command_executor = vm_public_ip, desired_capabilities = capabilities, options= options)
     driver.fullscreen_window()
     login(driver, loginURL, loginName, loginPass)
-    dataset_id_list=get_datasets(driver)
-    print(dataset_id_list)
-    scrape(['1650701188746310'])
+    driver.save_screenshot('screenshot_login.png')
+    
+    image = mpimg.imread("screenshot_login.png")
+    plt.imshow(image)
+    plt.show()
+    
+    #dataset_id_list=get_datasets(driver)
+    #print(dataset_id_list)
+    #scrape(['1650701188746310'])
 
 
 
