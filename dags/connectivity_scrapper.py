@@ -580,9 +580,9 @@ def test():
     htmlsource=driver.page_source
     print(re.findall('sufficient privi', htmlsource))
     
-    dataset_id_list=get_datasets(driver)
-    print(dataset_id_list)
-    scrape(dataset_id_list[0:4])
+    #dataset_id_list=get_datasets(driver)
+    #print(dataset_id_list)
+    scrape(['324470226907150','324470226907150'])
 
 
 
