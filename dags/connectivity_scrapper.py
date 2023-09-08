@@ -570,6 +570,13 @@ def test():
     plt.imshow(image)
     plt.show()
     print(plt.show())    
+
+    dataUrl='https://partners.facebook.com/data_for_good/data/?partner_id=3884468314953904'
+    driver.get(dataUrl)
+
+    htmlsource=driver.page_source
+    print(re.findall('sufficient privi', htmlsource))
+    
     #dataset_id_list=get_datasets(driver)
     #print(dataset_id_list)
     #scrape(['1650701188746310'])
