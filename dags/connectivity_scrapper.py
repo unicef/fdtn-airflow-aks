@@ -183,10 +183,7 @@ def login(driver, loginURL, loginName, loginPass):
     submit = driver.find_element_by_name("login")
     submit.click()
     random_sleep(5)
-
-    htmlsource=driver.page_source
-    print(re.findall('logout.php', htmlsource))
-    print('---code source---' + htmlsource)    
+    
     print("Logged in.")
 
 def get_datasets(driver):
@@ -581,7 +578,7 @@ def test():
     htmlsource=driver.page_source
     print(re.findall('sufficient privi', htmlsource))
     
-    #dataset_id_list=get_datasets(driver)
+    dataset_id_list=get_datasets(driver)
     #print(dataset_id_list)
     #scrape(['1650701188746310'])
 
