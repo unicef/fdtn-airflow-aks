@@ -280,6 +280,7 @@ def download_csvs(driver,datatype):
     try:
         disaster_name= re.findall(regexp_disaster_name, htmlsource)[0]
     except:
+        print('no disaster name')
         disaster_name=''      
     
     #download all csvs in the page
