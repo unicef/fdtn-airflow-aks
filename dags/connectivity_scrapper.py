@@ -295,6 +295,11 @@ def download_csvs(driver,datatype,dataset_id):
     print(csv_elements_list)
     
     # keep only elements that are not already in the list 
+
+
+    # for test TO REMOVE LATER 
+    list_already_in_db=[]
+    list_disaster_already_in_db=[]
     
     #For each element in the csv_element_list -> select it and click to download  
     for csv_element in csv_elements_list: 
@@ -564,6 +569,7 @@ def scrape(dataset_id_list):
 
 def test():
     list_already_in_db=[]
+    list_disaster_already_in_db=[]
     options.add_argument("--headless")
     driver = webdriver.Remote(command_executor = vm_public_ip, desired_capabilities = capabilities, options= options)
     driver.fullscreen_window()
