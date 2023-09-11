@@ -330,7 +330,7 @@ def download_csvs(driver,datatype,dataset_id):
     df_concat=pd.DataFrame(columns=['value','country','lon','lat','data_type','disaster_name','disaster_id','date'])
     
     # open the files one by one
-    #file_no=0
+    print('list of csv files: ' + csvfilenames)
     for csvfilename in csvfilenames:
         df_csv=pd.read_csv(csvfilename)
         #get the date from the csv_name
@@ -511,11 +511,11 @@ def scrape(dataset_id_list):
     
             df_concat=pd.concat([df_concat,download_csvs(driver,datatype,dataset_id)])
             print('concat ok for 3rd type')
-            #print(len(df_concat))
+            print('concat len:'+str(len(df_concat)))
     
             # if there is no data in df concat, meaning the datasets have all alreay been downloaded, we just stop
             if len(df_concat)>0:
-                print(len(df_concat))
+                
                 #get h3 for the lat lon 
                 df_concat['h3_08']=df_concat.apply(lambda x: get_h3(x['lat'], x['lon']), axis=1)
                 print('h3 ok')
@@ -571,15 +571,10 @@ def test():
     list_already_in_db=[]
     list_disaster_already_in_db=[]
     options.add_argument("--headless")
+
     driver = webdriver.Remote(command_executor = vm_public_ip, desired_capabilities = capabilities, options= options)
     driver.fullscreen_window()
     login(driver, loginURL, loginName, loginPass)
-    driver.save_screenshot('screenshot_login.png')
-    
-    image = mpimg.imread("screenshot_login.png")
-    plt.imshow(image)
-    plt.show()
-    print(plt.show())    
 
     dataUrl='https://partners.facebook.com/data_for_good/data/?partner_id=3884468314953904'
     driver.get(dataUrl)
