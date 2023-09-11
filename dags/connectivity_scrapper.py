@@ -330,7 +330,7 @@ def download_csvs(driver,datatype,dataset_id):
     df_concat=pd.DataFrame(columns=['value','country','lon','lat','data_type','disaster_name','disaster_id','date'])
     
     # open the files one by one
-    print('list of csv files: ' + csvfilenames)
+    print(csvfilenames)
     for csvfilename in csvfilenames:
         df_csv=pd.read_csv(csvfilename)
         #get the date from the csv_name
