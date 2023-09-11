@@ -328,8 +328,10 @@ def download_csvs(driver,datatype,dataset_id):
     # list the files that have been downloaded
     csvfilenames =  glob.glob(os.path.join(downloadPath, "*.csv"))
     df_concat=pd.DataFrame(columns=['value','country','lon','lat','data_type','disaster_name','disaster_id','date'])
-
+    
     os.listdir()
+    print(os.listdir())
+    
     # open the files one by one
     print(csvfilenames)
     for csvfilename in csvfilenames:
