@@ -571,6 +571,10 @@ def scrape(dataset_id_list):
 
 
 def test():
+
+    os.listdir()
+    print(os.listdir())
+    
     list_already_in_db=[]
     list_disaster_already_in_db=[]
     options.add_argument("--headless")
