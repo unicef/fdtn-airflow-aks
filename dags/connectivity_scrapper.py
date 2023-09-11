@@ -302,7 +302,7 @@ def download_csvs(driver,datatype,dataset_id):
     list_disaster_already_in_db=[]
     
     #For each element in the csv_element_list -> select it and click to download  
-    for csv_element in csv_elements_list: 
+    for csv_element in csv_elements_list[0:1]: 
         
         #skip if the csv element has already been downloaded before     
         #extract the date from the csv name 
@@ -328,7 +328,8 @@ def download_csvs(driver,datatype,dataset_id):
     # list the files that have been downloaded
     csvfilenames =  glob.glob(os.path.join(downloadPath, "*.csv"))
     df_concat=pd.DataFrame(columns=['value','country','lon','lat','data_type','disaster_name','disaster_id','date'])
-    
+
+    os.listdir()
     # open the files one by one
     print(csvfilenames)
     for csvfilename in csvfilenames:
