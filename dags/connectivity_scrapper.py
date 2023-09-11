@@ -236,7 +236,7 @@ def get_datasets(driver):
     actions.send_keys(Keys.ARROW_DOWN)
     #repeat the action 500 times
     i=0
-    while i<500:
+    while i<10:
         random_sleep(0.2)
         actions.perform()
         i=i+1
