@@ -81,10 +81,10 @@ def test():
 
 with DAG(
     ## MANDATORY 
-    dag_id='test remote vm',
+    dag_id='test-remote-vm',
     start_date=datetime(2022,11,28),
     default_args=default_args,
-    description='test remote vm',
+    description='test-remote-vm',
     #schedule not used for the moment as the DAGS run when airflow boots everymorning
     #schedule_interval='0 2 * * *',
     # no need to catch up on the previous runs
