@@ -76,7 +76,7 @@ country_list_eapr= ["Australia",
                    "Morocco",
                    "Libya"] 
 
-
+country_list_eapr= ["Morocco"]
 regexp_eapr_str= ('|').join(country_list_eapr)
 
 def is_in_eapr(disaster_name):
