@@ -432,6 +432,9 @@ def get_latest_disasters_rss():
 
     summary.to_csv('/tmp/latest_disasters.csv', index=False)
     df_hex.to_csv('/tmp/latest_disasters_hex.csv', index=False)
+    print(summary.head())
+    print(df_hex.head())
+
 
     return 
 
