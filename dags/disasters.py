@@ -73,7 +73,8 @@ country_list_eapr= ["Australia",
                    "Tuvalu",
                    "Vanuatu",
                    "Vietnam",
-                   "Morocco"] 
+                   "Morocco",
+                   "Libya"] 
 
 
 regexp_eapr_str= ('|').join(country_list_eapr)
