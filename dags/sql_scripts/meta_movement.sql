@@ -11,6 +11,10 @@ SELECT mm.disaster_id
 , ah_start.name1 as start_adm1
 , ah_start.name2 as start_adm2
 
+, ah_start.gid0 as start_gid0
+, ah_start.gid1 as start_gid1
+, ah_start.gid2 as start_gid2
+
 , ah_end.name0 as end_adm0
 , ah_end.name1 as end_adm1
 , ah_end.name2 as end_adm2
@@ -28,11 +32,10 @@ on ah_end.h3_08= mm.end_h3_08
 inner join public.disasters_hex dh 
 on dh.h3_08 = mm.start_h3_08 
 
-group by 1,2,3,4,5,6,7,8,9,10 )
+group by 1,2,3,4,5,6,7,8,9,10,11,12,13 )
 ;
 
 CREATE INDEX ON public.meta_movement(start_adm2)
-; 
 
 -- set up public table with adm 2 flows 
 -- keep only adm 2, data for the first 72hours, and movements >0
