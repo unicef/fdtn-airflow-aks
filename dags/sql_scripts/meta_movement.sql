@@ -64,6 +64,7 @@ on dh.event_id=d.event_id
 left join private.meta_movement_h308 mmh 
 on mmh.start_h3_08=dh.h3_08
 
+
 where TRUE 
 and mmh.date_time<= d.todate + INTERVAL '28 day' 
 and mmh.date_time >= d.fromdate - INTERVAL '3 day'
@@ -82,6 +83,12 @@ on md.disaster_id=mm.disaster_id
 
 left join mapping_meta_final
 on mm.disaster_id=mapping_meta_final.disaster_id
+
+
+-- inner join to make sure we only keep movement starting from the gid2 of the disaster's zone 
+inner join  disasters_hex dh 
+on  ( dh.event_id = mapping_meta_final.event_id and dh.gid2=mm.start_gid2)
+
 
 where date_time - start_date <= interval '3 days'
 and end_adm2 != start_adm2
