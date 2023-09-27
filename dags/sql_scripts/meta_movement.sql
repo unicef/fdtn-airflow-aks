@@ -35,7 +35,7 @@ on dh.h3_08 = mm.start_h3_08
 group by 1,2,3,4,5,6,7,8,9,10,11,12,13 )
 ;
 
-CREATE INDEX ON public.meta_movement(start_adm2)
+CREATE INDEX ON public.meta_movement(start_adm2);
 
 -- set up public table with adm 2 flows 
 -- keep only adm 2, data for the first 72hours, and movements >0
