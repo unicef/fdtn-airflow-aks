@@ -36,6 +36,11 @@ from azure.mgmt.compute import ComputeManagementClient
 import os
 
 from selenium import webdriver
+
+loginURL=https://www.facebook.com'
+loginName=os.getenv('META_LOGIN')
+loginPass=os.getenv('META_PASSWORD')
+
 options = webdriver.ChromeOptions()
 options.add_argument("--headless")
 
