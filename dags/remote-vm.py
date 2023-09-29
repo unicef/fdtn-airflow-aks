@@ -65,6 +65,88 @@ default_args={
 }
 
 
+
+def random_sleep(factor=1.0):
+    sleepTime = (random.random() + 1.0) * factor
+    time.sleep(sleepTime)
+    return sleepTime
+
+def get_element_contains(element, text):
+    return element.find_element_by_xpath(f"""//*[contains(text(),'{text}')]""")
+
+def go_enter(driver, target, coords, strn):
+    action = webdriver.common.action_chains.ActionChains(driver)
+    action.move_to_element(target)
+    action.move_by_offset(*coords)
+    action.click()
+    action.send_keys(strn)
+    action.send_keys(Keys.RETURN)
+    action.perform()
+    random_sleep(1.0)
+
+    
+# close the now available pop up if it exists
+def close_pop_up_access_search_bar(driver):
+    try:
+        element=get_element_contains(driver,'hidden label')
+        actions = ActionChains(driver)
+        actions.move_to_element(element).click().perform()
+        random_sleep(0.5)
+        driver.fullscreen_window()
+        
+        
+    except:
+        pass
+    
+    actions = ActionChains(driver)
+    actions.send_keys(Keys.TAB)
+    actions.perform()
+    random_sleep(0.5)
+    actions.perform()
+    random_sleep(0.5)
+    actions.perform()
+    random_sleep(0.5)
+    actions.perform()
+    random_sleep(0.5)
+    actions.perform()
+    random_sleep(0.5)
+    actions.perform()
+    random_sleep(0.5)
+    actions.perform()
+    random_sleep(0.5)
+
+        
+hex_granularity=8
+def get_h3(lat,lon):
+    return h3.geo_to_h3(lat=lat,lng=lon, resolution=hex_granularity)
+
+
+# copy csv files into the blob storage via azcopy
+# copies everything in the selenium_download folder into the blob storage
+
+def copy_csv_to_blob(destination_folder):
+
+    run_command_parameters = {
+        'command_id': 'RunShellScript', # For linux, don't change it
+        'script': [
+            'azcopy login --identity',
+            f'azcopy copy "/home/hugo.ruiz.verastegui/selenium_download/*" "https://fdtnstorage.blob.core.windows.net/meta/{destination_folder}"' ]
+        }
+
+
+    compute_client = ComputeManagementClient(
+            credential=credential,
+            subscription_id=subscription_id
+        )
+
+    poller = compute_client.virtual_machines.begin_run_command(
+        resource_group,
+        vm_name,
+        run_command_parameters);
+
+    result = poller.result()  # Blocking till executed
+    print(result.value[0].message)  # stdout/stderr
+
 def login(driver, loginURL, loginName, loginPass):
     print("Navigating to login page...")
     try:
