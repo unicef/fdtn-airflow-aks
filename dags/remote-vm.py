@@ -74,6 +74,49 @@ default_args={
     'retry_delay': timedelta(minutes=1)
 }
 
+country_list_eapr= ["Australia",
+                   "Brunei",
+                   "Cambodia",
+                   "Cook",
+                   "Fiji",
+                   "Indonesia",
+                   "China",
+                   "Japan",
+                   "Korea",
+                   "Kiribati",
+                   "Laos",
+                   "Malaysia",
+                   "Marshall",
+                   "Micronesia",
+                   "Mongolia",
+                   "Myanmar",
+                   "Nauru",
+                   "Zealand",
+                   "Niue",
+                   "Palau",
+                   "Papua",
+                   "Philippines",
+                   "Samoa",
+                   "Singapore",
+                   "Solomon",
+                   "Thailand",
+                   "Taiwan",
+                   "Timor",
+                   "Tonga",
+                   "Tuvalu",
+                   "Vanuatu",
+                   "Viet Nam",
+                   "Libya",
+                 # "Morocco"
+                  ]
+
+regexp_eapr_str= ('|').join(country_list_eapr)
+
+def is_in_eapr(disaster_name):
+    if re.search(regexp_eapr_str.lower().replace(" ", ""), disaster_name.lower().replace(" ", "")):
+        return 1
+    else :
+        return 0
 
 def delete_files_vm(folder_path_to_delete):
 
