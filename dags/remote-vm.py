@@ -65,6 +65,33 @@ default_args={
 }
 
 
+def login(driver, loginURL, loginName, loginPass):
+    print("Navigating to login page...")
+    try:
+        driver.get(loginURL)
+    except exceptions.WebDriverException:
+        raise ValueError("No login page found!")
+    print("Navigated to login page.")
+
+    print("Logging in...")
+
+    random_sleep(0.5)
+    username = driver.find_element_by_id("email")
+    password = driver.find_element_by_id("pass")
+    username.send_keys(loginName)
+    random_sleep(0.2)
+    password.send_keys(loginPass)
+    random_sleep(0.2)
+    driver.save_screenshot('screenshot.png')
+        
+    submit = driver.find_element_by_name("login")
+       
+    submit.click()
+    random_sleep(5)
+    driver.save_screenshot('screenshot_login.png')
+    
+    print("Logged in.")
+
 def download_csvs(driver,datatype):
     random_sleep(1)
     htmlsource=driver.page_source
