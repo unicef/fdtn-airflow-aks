@@ -35,6 +35,21 @@ from azure.identity import DefaultAzureCredential
 from azure.mgmt.compute import ComputeManagementClient
 import os
 
+from selenium import webdriver
+options = webdriver.ChromeOptions()
+options.add_argument("--headless")
+
+capabilities = {'browserName': 'chrome',
+               'platform': 'LINUX'}
+
+prefs = {}
+downloadPath='/home/hugo.ruiz.verastegui/selenium_download'
+prefs["profile.default_content_settings.popups"]=0
+prefs["download.default_directory"]=downloadPath
+options.add_experimental_option("prefs", prefs)
+
+
+
 ## Arguments applied to the tasks, not the DAG in itself 
 default_args={
     'owner':'airflow',
