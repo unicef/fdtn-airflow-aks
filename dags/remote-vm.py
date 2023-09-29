@@ -42,6 +42,14 @@ loginName=os.getenv('META_LOGIN')
 loginPass=os.getenv('META_PASSWORD')
 
 credential = DefaultAzureCredential()
+resource_group = 'LINUX-VM_GROUP'
+vm_name='linux-vm'
+subscription_id = 'cf59aa4a-a61e-4280-9315-5c366a03d507'
+today_date=datetime.now()
+compute_client = ComputeManagementClient(
+        credential=credential,
+        subscription_id=subscription_id
+    )
 
 options = webdriver.ChromeOptions()
 options.add_argument("--headless")
