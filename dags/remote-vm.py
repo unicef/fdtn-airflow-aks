@@ -97,6 +97,10 @@ def test():
     credential = DefaultAzureCredential()
     resource_group = 'LINUX-VM_GROUP'
     vm_name='linux-vm'
+    compute_client = ComputeManagementClient(
+        credential=credential,
+        subscription_id=subscription_id
+    )
     
     subscription_id = 'cf59aa4a-a61e-4280-9315-5c366a03d507'
     today_date=datetime.now()
