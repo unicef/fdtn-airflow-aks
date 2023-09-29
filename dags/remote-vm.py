@@ -65,6 +65,26 @@ default_args={
 }
 
 
+def delete_files_vm(folder_path_to_delete):
+
+    run_command_parameters = {
+        'command_id': 'RunShellScript', # For linux, don't change it
+        'script': [
+            f'rm -v {folder_path_to_delete}/*.csv']
+        }
+
+    compute_client = ComputeManagementClient(
+            credential=credential,
+            subscription_id=subscription_id
+        )
+
+    poller = compute_client.virtual_machines.begin_run_command(
+        resource_group,
+        vm_name,
+        run_command_parameters);
+
+    result = poller.result()  # Blocking till executed
+    print(result.value[0].message)  # stdout/stderr
 
 def random_sleep(factor=1.0):
     sleepTime = (random.random() + 1.0) * factor
