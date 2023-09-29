@@ -31,10 +31,6 @@ from selenium.webdriver.common.action_chains import ActionChains
 import random 
 from random import randint 
 
-import matplotlib 
-from matplotlib import pyplot as plt
-from matplotlib import image as mpimg
-
 from azure.identity import DefaultAzureCredential
 from azure.mgmt.compute import ComputeManagementClient
 import os
