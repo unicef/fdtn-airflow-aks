@@ -97,13 +97,14 @@ def test():
     credential = DefaultAzureCredential()
     resource_group = 'LINUX-VM_GROUP'
     vm_name='linux-vm'
+    subscription_id = 'cf59aa4a-a61e-4280-9315-5c366a03d507'
+    today_date=datetime.now()
     compute_client = ComputeManagementClient(
         credential=credential,
         subscription_id=subscription_id
     )
     
-    subscription_id = 'cf59aa4a-a61e-4280-9315-5c366a03d507'
-    today_date=datetime.now()
+
 
     #turn vm on and wait 5mn 
     compute_client.virtual_machines.begin_start(resource_group, vm_name)
