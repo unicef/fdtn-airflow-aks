@@ -1,104 +1,86 @@
--- set up public table with adm 0/1/2 levels 
 
-TRUNCATE public.meta_movement;
+TRUNCATE public.meta_population_crisis_adm2 ;
 
-INSERT INTO public.meta_movement(
-SELECT mm.disaster_id
-,mm.disaster_name
-,mm.country
-,mm.date_time
-, ah_start.name0 as start_adm0
-, ah_start.name1 as start_adm1
-, ah_start.name2 as start_adm2
+-- admin2 mapping + group by 
 
-, ah_start.gid0 as start_gid0
-, ah_start.gid1 as start_gid1
-, ah_start.gid2 as start_gid2
+INSERT INTO public.meta_population_crisis_adm2(
+SELECT mpch.disaster_id
+,mpch.disaster_name
+,mpch.country
+,mpch.date
 
-, ah_end.name0 as end_adm0
-, ah_end.name1 as end_adm1
-, ah_end.name2 as end_adm2
-,sum(mm.n_difference) as n_difference
+, ah.name0 as adm0
+, ah.name1 as adm1
+, ah.name2 as adm2
 
-FROM private.meta_movement_h308 mm 
+, ah.gid0 as gid0
+, ah.gid1 as gid1
+, ah.gid2 as gid2
 
-left join  public.adm2_hex ah_start
-on ah_start.h3_08= mm.start_h3_08 
+,sum(mpch.n_difference) as n_difference
+,sum(mpch.n_baseline) as n_baseline
+,sum(mpch.n_crisis) as n_crisis
 
-left join  public.adm2_hex ah_end
-on ah_end.h3_08= mm.end_h3_08 
+FROM private.meta_population_crisis_h308 mpch 
 
--- inner join to make sure we only keep movements coming from the disaster zone
-inner join public.disasters_hex dh 
-on dh.h3_08 = mm.start_h3_08 
+left join  public.adm2_hex ah
+on ah.h3_08= mpch.h3_08 
 
-group by 1,2,3,4,5,6,7,8,9,10,11,12,13 )
-;
+group by 1,2,3,4,5,6,7,8,9,10
+); 
 
-CREATE INDEX ON public.meta_movement(start_adm2);
+CREATE INDEX ON public.meta_population_crisis_adm2(amd2) ;
 
--- set up public table with adm 2 flows 
--- keep only adm 2, data for the first 72hours, and movements >0
+---- mapping meta/gdacs events / keep only the latest date 
 
+TRUNCATE public.meta_population_crisis_formatted;
 
-TRUNCATE public.meta_movement_formatted;
+INSERT INTO public.meta_population_crisis_formatted(
 
-INSERT INTO public.meta_movement_formatted(
-
-with min_date as (
+with max_date_table as (
 select disaster_id
-, min(date_time) as start_date
-from public.meta_movement
+, max(date) as max_date
+from public.meta_population_crisis_adm2
 group by 1
 ),
 
 mapping_meta_inter as (
-select dh.event_id, d.name,  d.fromdate, d.todate, mmh.disaster_id , mmh.data_type, count(*) as occurences
+select dh.event_id, d.name as gdacs_name,  d.fromdate, d.todate, mpch.disaster_id as meta_disaster_id, mpch.disaster_name as meta_disaster_name ,count(*) as occurences
 
- ,row_number() over(partition by mmh.disaster_id order by count(*) desc) as rn
+ ,row_number() over(partition by dh.event_id order by count(*) desc) as rn
 from public.disasters_hex dh 
 
 left join public.disasters d 
 on dh.event_id=d.event_id
 
-left join private.meta_movement_h308 mmh 
-on mmh.start_h3_08=dh.h3_08
+left join private.meta_population_crisis_h308 mpch 
+on mpch.h3_08=dh.h3_08
 
 
 where TRUE 
-and mmh.date_time<= d.todate + INTERVAL '28 day' 
-and mmh.date_time >= d.fromdate - INTERVAL '3 day'
-and mmh.disaster_id is not null
+and mpch.date<= d.todate + INTERVAL '28 day' 
+and mpch.date >= d.fromdate - INTERVAL '3 day'
+and mpch.disaster_id is not null
 group by 1,2,3,4,5,6
 ), 
   
 mapping_meta_final as (select * from mapping_meta_inter where rn=1) ,
 
 grouped_data as 
-(select mapping_meta_final.event_id, start_date, disaster_name, start_adm2, end_adm2, sum(mm.n_difference) as total
-from public.meta_movement mm
+(select mapping_meta_final.event_id, date, gdacs_name,meta_disaster_name , adm2, gid2, n_difference, n_baseline, n_crisis
+from public.meta_population_crisis_adm2 mpca
 
-left join min_date md 
-on md.disaster_id=mm.disaster_id
+left join max_date_table md 
+on md.disaster_id=mpca.disaster_id
 
 left join mapping_meta_final
-on mm.disaster_id=mapping_meta_final.disaster_id
+on mpca.disaster_id=mapping_meta_final.meta_disaster_id
 
 
--- inner join to make sure we only keep movement starting from the gid2 of the disaster's zone 
-inner join  disasters_hex dh 
-on  ( dh.event_id = mapping_meta_final.event_id and dh.gid2=mm.start_gid2)
-
-
-where date_time - start_date <= interval '3 days'
-and end_adm2 != start_adm2
-group by 1,2,3,4,5)
+where mpca.date= md.max_date )
 
 select * from grouped_data
-where total >0
-)
-  
-;
 
-CREATE INDEX ON public.meta_movement_formatted(start_adm2)
+);
+CREATE INDEX ON public.meta_population_crisis_formatted(adm2)
 ; 
