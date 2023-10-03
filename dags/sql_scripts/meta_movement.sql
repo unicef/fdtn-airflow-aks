@@ -57,8 +57,6 @@ CREATE INDEX ON public.meta_population_crisis_adm2(amd2) ;
 TRUNCATE public.meta_population_crisis_formatted;
 
 INSERT INTO public.meta_population_crisis_formatted(
-
-
 with max_date_table as (
 select disaster_id
 , max(date) as max_date
@@ -89,10 +87,10 @@ group by 1,2,3,4,5,6
 mapping_meta_final as (select * from mapping_meta_inter where rn=1) ,
 
 grouped_data as 
-(select mapping_meta_final.event_id, date, gdacs_name,meta_disaster_name , adm2, gid2, n_difference, n_baseline, n_crisis, 
+(select mapping_meta_final.event_id, date, gdacs_name,meta_disaster_name , adm2, gid2, n_difference, n_baseline, n_crisis,hrsl_population,
 
- -- get the scaled difference comparing the HRSL and the meta population during crisis baseline
 case when hrsl_population<= n_baseline then n_difference
+when (n_baseline=0 or n_baseline is null) then n_difference
 else  n_difference *( hrsl_population/n_baseline ) 
 end 
 as n_difference_scaled
