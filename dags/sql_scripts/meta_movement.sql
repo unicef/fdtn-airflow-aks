@@ -50,7 +50,7 @@ group by 1,2,3,4,5,6,7,8,9,10
 )
 select * from population_joined_adm ); 
 
-CREATE INDEX ON public.meta_population_crisis_adm2(amd2) ;
+CREATE INDEX ON public.meta_population_crisis_adm2(adm2) ;
 
 ---- mapping meta/gdacs events / keep only the latest date 
 
