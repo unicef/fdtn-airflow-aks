@@ -19,7 +19,7 @@ default_args={
 
 with DAG(
     ## MANDATORY 
-    dag_id='sitrep_disasters',
+    dag_id='mail',
     start_date=datetime(2022,11,28),
     default_args=default_args,
     description='sitrep disasters',
