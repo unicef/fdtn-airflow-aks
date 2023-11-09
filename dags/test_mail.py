@@ -34,7 +34,7 @@ with DAG(
         task_id='send_email', 
         to='huruiz@unicef.org', 
         subject='email test', 
-        html_content=" this has been a success "
+        html_content=" this has been a success ")
         #,dag=dag_email)
 
 
