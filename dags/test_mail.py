@@ -61,3 +61,4 @@ with DAG(
             )
     
         send_email
+        send_email_2
