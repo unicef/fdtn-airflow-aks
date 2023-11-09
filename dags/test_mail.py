@@ -4,6 +4,8 @@ import airflow
 from datetime import timedelta 
 from airflow import DAG 
 from datetime import datetime, timedelta 
+import smtplib
+from email.mime.text import MIMEText
 from airflow.operators.python_operator import PythonOperator 
 from airflow.operators.email_operator import EmailOperator
 
@@ -16,6 +18,23 @@ default_args={
     'retries':2,
     'retry_delay': timedelta(minutes=1)
 }
+
+subject = "Test email GDACS"
+body = "this is a success"
+sender = "unicef.data.eapro@gmail.com"
+recipients = ["hugorv54@gmail.com"]
+password = "svdh gonx kfch jahb"
+
+def send_email():
+    msg = MIMEText(body)
+    msg['Subject'] = subject
+    msg['From'] = sender
+    msg['To'] = ', '.join(recipients)
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
+       smtp_server.login(sender, password)
+       smtp_server.sendmail(sender, recipients, msg.as_string())
+    print("Message sent!")
+
 
 with DAG(
     ## MANDATORY 
@@ -35,4 +54,10 @@ with DAG(
         html_content=" this has been a success" )
         #,dag=dag_email)
 
+        
+       send_email_2= PythonOperator(
+            task_id="send_email_python",
+            python_callable=send_email
+            )
+    
         send_email
