@@ -25,7 +25,7 @@ sender = "unicef.data.eapro@gmail.com"
 recipients = ["hugorv54@gmail.com"]
 password = "svdh gonx kfch jahb"
 
-def send_email():
+def send_email_function():
     msg = MIMEText(body)
     msg['Subject'] = subject
     msg['From'] = sender
@@ -57,7 +57,7 @@ with DAG(
         
         send_email_2= PythonOperator(
             task_id="send_email_python",
-            python_callable=send_email
+            python_callable=send_email_function
             )
     
         send_email
