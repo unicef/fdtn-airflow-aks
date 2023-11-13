@@ -434,8 +434,9 @@ def get_latest_disasters_rss():
     print(summary.head())
     print(df_hex.head())
 
-    # switch to dataframe to enable xcom when returning
-    summary=pd.DataFrame(summary)
+    # switch to dict to enable xcom when returning
+    summary=summary.to_dict()
+    print(summary)
     
     return summary
 
@@ -450,6 +451,7 @@ def pg_extract_hex(copy_sql):
 
 def send_request_email():
     #keep only the critical and recent disasters from GDACS
+    summary=pd.DataFrame(summary.items())
     latest_critical_disasters=summary[summary['gdacs:alertscore'>=1]]
 
     #Get the list of already requested disasters 
