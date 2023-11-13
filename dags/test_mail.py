@@ -36,14 +36,24 @@ def send_email_function():
 
     hook = PostgresHook(postgres_conn_id=POSTGRES_CONN_ID)
     df = hook.get_pandas_df(sql="select event_id, name from public.meta_requests group by 1,2 ;")
+
+    df_html = """\
+    <html>
+      <head></head>
+      <body>
+        {0}
+      </body>
+    </html>
+    """.format(df.to_html())
+    
     print('print sql results: ')
     print(df)
     
-    msg = MIMEText(body)
+    msg = MIMEText(body + df_html)
     msg['Subject'] = subject
     msg['From'] = sender
     msg['To'] = ', '.join(recipients)
-    msg['Cc'] = ', '.join(Cc)
+    msg['Cc'] = ', '.join(cc)
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
        smtp_server.login(sender, password)
        smtp_server.sendmail(sender, recipients, msg.as_string())
