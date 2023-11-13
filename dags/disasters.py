@@ -451,39 +451,41 @@ def get_latest_disasters_rss():
     #filter the list of new critical disasters to keep only the ones not requested yet 
     latest_critical_disasters=latest_critical_disasters[~latest_critical_disasters['gdacs:eventid'].isin(list(df_already_requested['event_id']))] 
 
-    #keep only relevant columns to be sent via email
-    latest_critical_disasters_email=latest_critical_disasters[['gdacs:event_id', 'htmldescription', 'gdacs:fromdate' ,'gdacs:todate', 'link']]
+    #send email only if there is a new critical disaster
+    if len(latest_critical_disasters)>0:      
+        #keep only relevant columns to be sent via email
+        latest_critical_disasters_email=latest_critical_disasters[['gdacs:event_id', 'htmldescription', 'gdacs:fromdate' ,'gdacs:todate', 'link']]
+        
+        df_html = """\
+        <html>
+          <head></head>
+          <body>
+            {0}
+          </body>
+        </html>
+        """.format(latest_critical_disasters.to_html())
+        
+        subject = "Test email GDACS"
+        cc = ['huruiz@unicef.org']
+        body = "Dear Anthony, \
+        I hope you are doing great and that Vientiane's croissants are exquisite \
+        We just identified some new high intensity disaster in the East Asia Pacific Region and we would like to start the generation of the Population/ Movements/ Connectivity datasets for the following disaster(s): "
+        sender = "unicef.data.eapro@gmail.com"
+        recipients = ["huruiz@unicef.org"]
+        password = "svdh gonx kfch jahb" 
     
-    df_html = """\
-    <html>
-      <head></head>
-      <body>
-        {0}
-      </body>
-    </html>
-    """.format(latest_critical_disasters.to_html())
-    
-    subject = "Test email GDACS"
-    cc = ['huruiz@unicef.org']
-    body = "Dear Anthony, \
-    I hope you are doing great and that Vientiane's croissants are exquisite \
-    We just identified some new high intensity disaster in the East Asia Pacific Region and we would like to start the generation of the Population/ Movements/ Connectivity datasets for the following disaster(s): "
-    sender = "unicef.data.eapro@gmail.com"
-    recipients = ["huruiz@unicef.org"]
-    password = "svdh gonx kfch jahb" 
-
-    msg = MIMEMultipart()
-    #msg = MIMEText(body)
-    table = MIMEText(df_html, 'html')
-    msg.attach(table)
-    msg['Subject'] = subject
-    msg['From'] = sender
-    msg['To'] = ', '.join(recipients)
-    msg['Cc'] = ', '.join(cc)
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
-       smtp_server.login(sender, password)
-       smtp_server.sendmail(sender, recipients, msg.as_string())
-    print("Message sent!")
+        msg = MIMEMultipart()
+        #msg = MIMEText(body)
+        table = MIMEText(df_html, 'html')
+        msg.attach(table)
+        msg['Subject'] = subject
+        msg['From'] = sender
+        msg['To'] = ', '.join(recipients)
+        msg['Cc'] = ', '.join(cc)
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
+           smtp_server.login(sender, password)
+           smtp_server.sendmail(sender, recipients, msg.as_string())
+        print("Message sent!")
 
 
     
