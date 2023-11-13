@@ -31,10 +31,10 @@ password = "svdh gonx kfch jahb"
 
 def send_email_function():
 
-    hook = PostgresHook(postgres_conn_id=POSTGRES_CONN_ID)
-    sql_result=hook.run(sql='select event_id from public.meta_requests group by 1')
-    print('print sql results: ')
-    print(sql_result)
+    #hook = PostgresHook(postgres_conn_id=POSTGRES_CONN_ID)
+    #sql_result=hook.run(sql='select event_id from public.meta_requests group by 1')
+    #print('print sql results: ')
+    #print(sql_result)
     
     msg = MIMEText(body)
     msg['Subject'] = subject
