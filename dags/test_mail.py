@@ -24,15 +24,18 @@ default_args={
 }
 
 subject = "Test email GDACS"
-body = "this is a success"
+cc = ['huruiz@unicef.org']
+body = "Dear Anthony, \
+I hope you are doing great and that Vientiane's croissants are exquisite \
+We just identified some new high intensity disaster in the East Asia Pacific Region and we would like to start the generation of the Population/ Movements/ Connectivity datasets for the following disaster(s): "
 sender = "unicef.data.eapro@gmail.com"
-recipients = ["hugorv54@gmail.com"]
+recipients = ["huruiz@unicef.org"]
 password = "svdh gonx kfch jahb"
 
 def send_email_function():
 
     hook = PostgresHook(postgres_conn_id=POSTGRES_CONN_ID)
-    df = hook.get_pandas_df(sql="select event_id from public.meta_requests group by 1;")
+    df = hook.get_pandas_df(sql="select event_id, name from public.meta_requests group by 1,2 ;")
     print('print sql results: ')
     print(df)
     
@@ -40,6 +43,7 @@ def send_email_function():
     msg['Subject'] = subject
     msg['From'] = sender
     msg['To'] = ', '.join(recipients)
+    msg['Cc'] = ', '.join(Cc)
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
        smtp_server.login(sender, password)
        smtp_server.sendmail(sender, recipients, msg.as_string())
