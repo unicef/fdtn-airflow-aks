@@ -454,7 +454,7 @@ def get_latest_disasters_rss():
     #send email only if there is a new critical disaster
     if len(latest_critical_disasters)>0:      
         #keep only relevant columns to be sent via email
-        latest_critical_disasters_email=latest_critical_disasters[['gdacs:eventid', 'htmldescription', 'gdacs:fromdate' ,'gdacs:todate', 'link']]
+        latest_critical_disasters_email=latest_critical_disasters[['gdacs:eventid', 'htmldescription', 'gdacs:country','gdacs:fromdate' ,'gdacs:todate', 'link']]
         
         df_html = """\
         <html>
