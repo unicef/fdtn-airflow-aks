@@ -64,7 +64,7 @@ with DAG(
         read_request_table = PostgresOperator(
         task_id=" read_request_table",
         postgres_conn_id="postgres_datafordecision",
-        sql="sql_scripts/read_request_table.sql"
+        sql="sql_scripts/read_requests.sql"
         )
 
         read_request_table
