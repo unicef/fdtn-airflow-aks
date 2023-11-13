@@ -435,7 +435,7 @@ def get_latest_disasters_rss():
     print(df_hex.head())
 
 
-    return 
+    return summary
 
 
 def pg_extract_disasters(copy_sql):
