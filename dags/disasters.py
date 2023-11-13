@@ -435,7 +435,7 @@ def get_latest_disasters_rss():
     print(df_hex.head())
 
     # switch to dict to enable xcom when returning
-    summary=summary.to_dict()
+    summary=summary[['gdacs:eventid','title','link','htmldescription','gdacs:fromdate','gdacs:todate','gdacs:alertscore']].to_dict()
     print(summary)
     
     return summary
