@@ -9,7 +9,7 @@ from email.mime.text import MIMEText
 from airflow.operators.python_operator import PythonOperator 
 from airflow.operators.email_operator import EmailOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
-from Airflow.providers.postgres.hooks.postgres import PostgresHook
+from airflow.providers.postgres.hooks.postgres import PostgresHook
 
 #define the connection id to postres
 POSTGRES_CONN_ID="postgres_datafordecision"
