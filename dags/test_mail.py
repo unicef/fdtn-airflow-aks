@@ -48,8 +48,9 @@ def send_email_function():
     
     print('print sql results: ')
     print(df)
-    
-    msg = MIMEText(body)
+
+    msg = MIMEMultipart(body)
+    #msg = MIMEText(body)
     table = MIMEText(df_html, 'html')
     msg.attach(table)
     msg['Subject'] = subject
