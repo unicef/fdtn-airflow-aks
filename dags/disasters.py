@@ -443,7 +443,7 @@ def get_latest_disasters_rss():
     df_already_requested = hook.get_pandas_df(sql="select event_id from public.meta_requests group by 1 ;")
 
     #filter the list of new critical disasters to keep only the ones not requested yet 
-    latest_critical_disasters=latest_critical_disasters[~latest_critical_disasters.event_id.isin(list(df_already_requested['event_id']))] 
+    latest_critical_disasters=latest_critical_disasters[~latest_critical_disasters['gdacs:eventid'].isin(list(df_already_requested['event_id']))] 
     
     df_html = """\
     <html>
