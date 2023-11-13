@@ -435,7 +435,7 @@ def get_latest_disasters_rss():
     print(df_hex.head())
 
     #keep only the critical and recent disasters from GDACS
-    latest_critical_disasters=summary[summary['gdacs:alertscore'>=1]]
+    latest_critical_disasters=summary[summary['gdacs:alertscore']>=1]
 
     #Get the list of already requested disasters 
     hook = PostgresHook(postgres_conn_id=POSTGRES_CONN_ID)
