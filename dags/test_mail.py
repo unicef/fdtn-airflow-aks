@@ -35,7 +35,7 @@ def send_email_function():
     sql_result=hook.run(sql='select event_id from public.meta_requests group by 1')
     print(sql_result)
     
-    msg = MIMEText(body + sql_result)
+    msg = MIMEText(body)
     msg['Subject'] = subject
     msg['From'] = sender
     msg['To'] = ', '.join(recipients)
