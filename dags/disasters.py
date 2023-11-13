@@ -434,25 +434,8 @@ def get_latest_disasters_rss():
     print(summary.head())
     print(df_hex.head())
 
-    # switch to dict to enable xcom when returning
-    summary=summary[['gdacs:eventid','title','link','htmldescription','gdacs:fromdate','gdacs:todate','gdacs:alertscore']].to_dict()
-    print(summary)
-    
-    return summary
-
-
-def pg_extract_disasters(copy_sql):
-  pg_hook = PostgresHook.get_hook(POSTGRES_CONN_ID)
-  pg_hook.copy_expert(copy_sql, '/tmp/latest_disasters.csv')
-
-def pg_extract_hex(copy_sql):
-  pg_hook = PostgresHook.get_hook(POSTGRES_CONN_ID)
-  pg_hook.copy_expert(copy_sql, '/tmp/latest_disasters_hex.csv')
-
-def send_request_email():
     #keep only the critical and recent disasters from GDACS
-    latest_critical_disasters=pd.DataFrame(summary.items())
-    latest_critical_disasters=latest_critical_disasters[latest_critical_disasters['gdacs:alertscore'>=1]]
+    latest_critical_disasters=summary[summary['gdacs:alertscore'>=1]]
 
     #Get the list of already requested disasters 
     hook = PostgresHook(postgres_conn_id=POSTGRES_CONN_ID)
@@ -491,6 +474,20 @@ def send_request_email():
        smtp_server.login(sender, password)
        smtp_server.sendmail(sender, recipients, msg.as_string())
     print("Message sent!")
+
+
+    
+    return 
+
+
+def pg_extract_disasters(copy_sql):
+  pg_hook = PostgresHook.get_hook(POSTGRES_CONN_ID)
+  pg_hook.copy_expert(copy_sql, '/tmp/latest_disasters.csv')
+
+def pg_extract_hex(copy_sql):
+  pg_hook = PostgresHook.get_hook(POSTGRES_CONN_ID)
+  pg_hook.copy_expert(copy_sql, '/tmp/latest_disasters_hex.csv')
+ 
     
 
 with DAG(
