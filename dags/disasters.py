@@ -446,6 +446,48 @@ def pg_extract_hex(copy_sql):
   pg_hook = PostgresHook.get_hook(POSTGRES_CONN_ID)
   pg_hook.copy_expert(copy_sql, '/tmp/latest_disasters_hex.csv')
 
+def send_request_email():
+    #keep only the critical and recent disasters from GDACS
+    latest_critical_disasters=summary[summary['gdacs:alertscore'>=1]]
+
+    #Get the list of already requested disasters 
+    hook = PostgresHook(postgres_conn_id=POSTGRES_CONN_ID)
+    df_already_requested = hook.get_pandas_df(sql="select event_id from public.meta_requests group by 1 ;")
+
+    #filter the list of new critical disasters to keep only the ones not requested yet 
+    latest_critical_disasters=latest_critical_disasters[~latest_critical_disasters.event_id.isin(list(df_already_requested['event_id']))] 
+    
+    df_html = """\
+    <html>
+      <head></head>
+      <body>
+        {0}
+      </body>
+    </html>
+    """.format(latest_critical_disasters.to_html())
+    
+    subject = "Test email GDACS"
+    cc = ['huruiz@unicef.org']
+    body = "Dear Anthony, \
+    I hope you are doing great and that Vientiane's croissants are exquisite \
+    We just identified some new high intensity disaster in the East Asia Pacific Region and we would like to start the generation of the Population/ Movements/ Connectivity datasets for the following disaster(s): "
+    sender = "unicef.data.eapro@gmail.com"
+    recipients = ["huruiz@unicef.org"]
+    password = "svdh gonx kfch jahb" 
+
+    msg = MIMEMultipart()
+    #msg = MIMEText(body)
+    table = MIMEText(df_html, 'html')
+    msg.attach(table)
+    msg['Subject'] = subject
+    msg['From'] = sender
+    msg['To'] = ', '.join(recipients)
+    msg['Cc'] = ', '.join(cc)
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
+       smtp_server.login(sender, password)
+       smtp_server.sendmail(sender, recipients, msg.as_string())
+    print("Message sent!")
+    
 
 with DAG(
     ## MANDATORY 
@@ -462,6 +504,11 @@ with DAG(
         get_disasters_resources = PythonOperator(
             task_id="get_disasters_resources",
             python_callable=get_latest_disasters_rss
+            )
+
+        send_mail = PythonOperator(
+            task_id="send_mail",
+            python_callable=send_request_email
             )
 
         create_disasters_table = PostgresOperator(
@@ -541,3 +588,4 @@ with DAG(
 
         get_disasters_resources>>create_disasters_table>>fill_disasters_table>>disasters_deduplicate
         get_disasters_resources>>create_hex_table>>fill_hex_table>>collate_hex_table>>hex_deduplicate>>create_connectivity_table>>create_population_region_table>>create_movement_table>>fill_logs_table
+        get_disasters_resources>>send_mail
