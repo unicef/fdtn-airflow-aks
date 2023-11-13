@@ -450,6 +450,9 @@ def get_latest_disasters_rss():
 
     #filter the list of new critical disasters to keep only the ones not requested yet 
     latest_critical_disasters=latest_critical_disasters[~latest_critical_disasters['gdacs:eventid'].isin(list(df_already_requested['event_id']))] 
+
+    #keep only relevant columns to be sent via email
+    latest_critical_disasters_email=latest_critical_disasters[['gdacs:event_id', 'htmldescription', 'gdacs:fromdate' ,'gdacs:todate', 'link']]
     
     df_html = """\
     <html>
