@@ -50,7 +50,7 @@ def send_email_function():
     print(df)
     
     msg = MIMEText(body)
-    table = MIMETextdf_(df_html, 'html')
+    table = MIMEText(df_html, 'html')
     msg.attach(table)
     msg['Subject'] = subject
     msg['From'] = sender
