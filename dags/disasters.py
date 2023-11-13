@@ -486,6 +486,12 @@ def get_latest_disasters_rss():
            smtp_server.login(sender, password)
            smtp_server.sendmail(sender, recipients, msg.as_string())
         print("Message sent!")
+        
+        #add the time stamp for the date the mail was sent 
+        latest_critical_disasters_email['date_asked']=today_date
+        
+        # Save the table into a csv to be uploaded into SQL in a second step 
+        latest_critical_disasters_email.to_csv('/tmp/latest_critical_disasters_email.csv', index=False)       
 
 
     
@@ -499,8 +505,11 @@ def pg_extract_disasters(copy_sql):
 def pg_extract_hex(copy_sql):
   pg_hook = PostgresHook.get_hook(POSTGRES_CONN_ID)
   pg_hook.copy_expert(copy_sql, '/tmp/latest_disasters_hex.csv')
+
+def pg_extract_requests(copy_sql):
+  pg_hook = PostgresHook.get_hook(POSTGRES_CONN_ID)
+  pg_hook.copy_expert(copy_sql, '/tmp/latest_critical_disasters_email.csv')
  
-    
 
 with DAG(
     ## MANDATORY 
@@ -525,6 +534,14 @@ with DAG(
             sql="sql_scripts/sitrep_disasters_rss.sql"
         )
 
+        
+        fill_requests_table = PythonOperator(
+            task_id="fill_requests_table",
+            python_callable=pg_extract_requests,
+            op_kwargs={
+                "copy_sql": "COPY meta_requests FROM STDIN WITH CSV HEADER DELIMITER as ','"
+                }
+        )
 
         fill_disasters_table = PythonOperator(
             task_id="fill_disasters_table",
@@ -596,4 +613,4 @@ with DAG(
 
         get_disasters_resources>>create_disasters_table>>fill_disasters_table>>disasters_deduplicate
         get_disasters_resources>>create_hex_table>>fill_hex_table>>collate_hex_table>>hex_deduplicate>>create_connectivity_table>>create_population_region_table>>create_movement_table>>fill_logs_table
- 
+        get_disasters_resources>>fill_requests_table
