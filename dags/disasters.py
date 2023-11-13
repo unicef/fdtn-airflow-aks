@@ -507,11 +507,6 @@ with DAG(
             python_callable=get_latest_disasters_rss
             )
 
-        send_mail = PythonOperator(
-            task_id="send_mail",
-            python_callable=send_request_email
-            )
-
         create_disasters_table = PostgresOperator(
             task_id="create_disasters_table",
             postgres_conn_id="postgres_datafordecision",
