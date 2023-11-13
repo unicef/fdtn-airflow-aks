@@ -435,6 +435,7 @@ def get_latest_disasters_rss():
     print(df_hex.head())
 
     #keep only the critical and recent disasters from GDACS
+    summary['gdacs:alertscore']=summary['gdacs:alertscore'].astype(float)
     latest_critical_disasters=summary[summary['gdacs:alertscore']>=1]
 
     #Get the list of already requested disasters 
