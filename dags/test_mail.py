@@ -8,6 +8,7 @@ import smtplib
 from email.mime.text import MIMEText
 from airflow.operators.python_operator import PythonOperator 
 from airflow.operators.email_operator import EmailOperator
+from airflow.providers.postgres.operators.postgres import PostgresOperator
 
 
 ## Arguments applied to the tasks, not the DAG in itself 
@@ -59,6 +60,13 @@ with DAG(
             task_id="send_email_python",
             python_callable=send_email_function
             )
-    
+
+        read_request_table = PostgresOperator(
+        task_id=" read_request_table",
+        postgres_conn_id="postgres_datafordecision",
+        sql="sql_scripts/read_request_table.sql"
+        )
+
+        read_request_table
         send_email
         send_email_2
