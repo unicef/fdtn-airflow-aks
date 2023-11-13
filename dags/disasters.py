@@ -451,8 +451,8 @@ def pg_extract_hex(copy_sql):
 
 def send_request_email():
     #keep only the critical and recent disasters from GDACS
-    summary=pd.DataFrame(summary.items())
-    latest_critical_disasters=summary[summary['gdacs:alertscore'>=1]]
+    latest_critical_disasters=pd.DataFrame(summary.items())
+    latest_critical_disasters=latest_critical_disasters[latest_critical_disasters['gdacs:alertscore'>=1]]
 
     #Get the list of already requested disasters 
     hook = PostgresHook(postgres_conn_id=POSTGRES_CONN_ID)
