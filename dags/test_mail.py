@@ -49,7 +49,7 @@ def send_email_function():
     print('print sql results: ')
     print(df)
 
-    msg = MIMEMultipart(body)
+    msg = MIMEMultipart()
     #msg = MIMEText(body)
     table = MIMEText(df_html, 'html')
     msg.attach(table)
