@@ -435,7 +435,7 @@ def get_latest_disasters_rss():
     print(df_hex.head())
 
     # switch to dataframe to enable xcom when returning
-    summary=pd.Dataframe(summary)
+    summary=pd.DataFrame(summary)
     
     return summary
 
