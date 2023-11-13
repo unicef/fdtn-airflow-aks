@@ -463,7 +463,7 @@ def get_latest_disasters_rss():
             {0}
           </body>
         </html>
-        """.format(latest_critical_disasters.to_html())
+        """.format(latest_critical_disasters_email.to_html())
         
         subject = "Test email GDACS"
         cc = ['huruiz@unicef.org']
