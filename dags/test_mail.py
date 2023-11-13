@@ -9,7 +9,10 @@ from email.mime.text import MIMEText
 from airflow.operators.python_operator import PythonOperator 
 from airflow.operators.email_operator import EmailOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
+from Airflow.providers.postgres.hooks.postgres import PostgresHook
 
+#define the connection id to postres
+POSTGRES_CONN_ID="postgres_datafordecision"
 
 ## Arguments applied to the tasks, not the DAG in itself 
 default_args={
@@ -27,7 +30,12 @@ recipients = ["hugorv54@gmail.com"]
 password = "svdh gonx kfch jahb"
 
 def send_email_function():
-    msg = MIMEText(body)
+
+    hook = PostgresHook(postgres_conn_id=POSTGRES_CONN_ID)
+    sql_result=hook.run(sql='select event_id from public.meta_requests group by 1')
+    print(sql_result)
+    
+    msg = MIMEText(body + sql_result)
     msg['Subject'] = subject
     msg['From'] = sender
     msg['To'] = ', '.join(recipients)
@@ -35,6 +43,8 @@ def send_email_function():
        smtp_server.login(sender, password)
        smtp_server.sendmail(sender, recipients, msg.as_string())
     print("Message sent!")
+
+
 
 
 with DAG(
@@ -48,25 +58,10 @@ with DAG(
     # no need to catch up on the previous runs
     catchup=False
 ) as dag:
-        send_email = EmailOperator( 
-        task_id='send_email', 
-        to='huruiz@unicef.org', 
-        subject='email test', 
-        html_content=" this has been a success" )
-        #,dag=dag_email)
-
         
-        send_email_2= PythonOperator(
+        send_email= PythonOperator(
             task_id="send_email_python",
             python_callable=send_email_function
             )
 
-        read_request_table = PostgresOperator(
-        task_id=" read_request_table",
-        postgres_conn_id="postgres_datafordecision",
-        sql="sql_scripts/read_requests.sql"
-        )
-
-        read_request_table
         send_email
-        send_email_2
