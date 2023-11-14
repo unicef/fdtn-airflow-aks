@@ -7,6 +7,9 @@ from airflow.providers.postgres.operators.postgres import PostgresOperator
 from datetime import date, datetime, timedelta
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 
+import os 
+import glob
+
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
