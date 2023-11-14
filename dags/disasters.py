@@ -477,7 +477,7 @@ def get_latest_disasters_rss():
         recipients = ["huruiz@unicef.org"]
         password = "svdh gonx kfch jahb" 
 
-        df_html = body + """\
+        df_html = """\
         <html>
           <head></head>
           <body>
