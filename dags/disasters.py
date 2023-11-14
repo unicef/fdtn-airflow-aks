@@ -472,7 +472,7 @@ def get_latest_disasters_rss():
         
         subject = "Test email GDACS"
         cc = ['huruiz@unicef.org','hugo.ruiz.verastegui@gmail.com']
-        body = "Dear Anthony, <br> I hope you are doing great and that Vientiane's croissants are exquisite <br> We just identified some new high intensity disaster in the East Asia Pacific Region and we would like to start the generation of the Population/ Movements/ Connectivity datasets for the following disaster(s):  <br> "
+        body = "Dear Anthony, <br> <br> I hope you are doing great and that Vientiane's croissants are exquisite <br> We just identified some new high intensity disaster in the East Asia Pacific Region and we would like to start the generation of the Population/ Movements/ Connectivity datasets for the following disaster(s):  <br> <br> "
         sender = "unicef.data.eapro@gmail.com"
         recipients = ["huruiz@unicef.org"]
         password = "svdh gonx kfch jahb" 
