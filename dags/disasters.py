@@ -474,7 +474,7 @@ def get_latest_disasters_rss():
         cc = ['huruiz@unicef.org','hugo.ruiz.verastegui@gmail.com']
         body = "Dear Anthony, <br> <br> I hope you are doing great and that Vientiane's croissants are exquisite <br> We just identified some new high intensity disaster in the East Asia Pacific Region and we would like to start the generation of the Population/ Movements/ Connectivity datasets for the following disaster(s):  <br> <br> "
         sender = "unicef.data.eapro@gmail.com"
-        recipients = ["amockler@unicef.org"]
+        recipients = ["huruizr@unicef.org"]
         password = "svdh gonx kfch jahb" 
 
         df_html = """\
