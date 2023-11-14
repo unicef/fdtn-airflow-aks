@@ -7,9 +7,9 @@ INSERT INTO public.meta_population_crisis_adm2 (
 
 with population_meta_grouped_h308 as (
 
-select disaster_id, disaster_name, country, h3_08, date, sum(n_baseline) as n_baseline, sum(n_crisis) as n_crisis, sum(n_difference) as n_difference
+select disaster_id, disaster_name, country, h3_08, date, date_time, sum(n_baseline) as n_baseline, sum(n_crisis) as n_crisis, sum(n_difference) as n_difference
 FROM private.meta_population_crisis_h308 mpch
-group by 1,2,3,4,5
+group by 1,2,3,4,5,6
 
 )
 ,
@@ -28,6 +28,7 @@ SELECT pmjh.disaster_id
 ,pmjh.disaster_name
 ,pmjh.country
 ,pmjh.date
+,pmjh.date_time
 
 , ah.name0 as adm0
 , ah.name1 as adm1
@@ -46,7 +47,7 @@ FROM population_meta_joined_hrsl pmjh
 
 left join  public.adm2_hex ah
 on ah.h3_08= pmjh.h3_08 
-group by 1,2,3,4,5,6,7,8,9,10
+group by 1,2,3,4,5,6,7,8,9,10,11
 )
 select * from population_joined_adm ); 
 
@@ -59,7 +60,7 @@ TRUNCATE public.meta_population_crisis_formatted;
 INSERT INTO public.meta_population_crisis_formatted(
 with max_date_table as (
 select disaster_id
-, max(date) as max_date
+, max(date_time) as max_date
 from public.meta_population_crisis_adm2
 group by 1
 ),
@@ -104,10 +105,9 @@ left join mapping_meta_final
 on mpca.disaster_id=mapping_meta_final.meta_disaster_id
 
 
-where mpca.date= md.max_date )
+where mpca.date_time = md.max_date )
 
 select * from grouped_data
 
 );
 CREATE INDEX ON public.meta_population_crisis_formatted(adm2)
-; 
