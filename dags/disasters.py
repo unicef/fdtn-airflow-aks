@@ -454,7 +454,7 @@ def get_latest_disasters_rss():
 
     #keep only the critical and recent disasters from GDACS
     summary['gdacs:alertscore']=summary['gdacs:alertscore'].astype(float)
-    latest_critical_disasters=summary[summary['gdacs:alertscore']>=1]
+    latest_critical_disasters=summary[summary['gdacs:alertscore']>=0.5]
 
     #Get the list of already requested disasters 
     hook = PostgresHook(postgres_conn_id=POSTGRES_CONN_ID)
@@ -479,8 +479,8 @@ def get_latest_disasters_rss():
         
         subject = "Test email GDACS"
         cc = ['huruiz@unicef.org']
-        body = "Dear Anthony, \
-        I hope you are doing great and that Vientiane's croissants are exquisite \
+        body = "Dear Anthony, \n  \
+        I hope you are doing great and that Vientiane's croissants are exquisite \n  \ 
         We just identified some new high intensity disaster in the East Asia Pacific Region and we would like to start the generation of the Population/ Movements/ Connectivity datasets for the following disaster(s): "
         sender = "unicef.data.eapro@gmail.com"
         recipients = ["huruiz@unicef.org"]
