@@ -484,7 +484,7 @@ def get_latest_disasters_rss():
         recipients = ["huruiz@unicef.org"]
         password = "svdh gonx kfch jahb" 
     
-        msg = MIMEMultipart()
+        msg = MIMEMultipart(body)
         #msg = MIMEText(body)
         table = MIMEText(df_html, 'html')
         msg.attach(table)
