@@ -468,7 +468,16 @@ def get_latest_disasters_rss():
         #keep only relevant columns to be sent via email
         latest_critical_disasters_email=latest_critical_disasters[['gdacs:eventid', 'htmldescription', 'gdacs:country','gdacs:fromdate' ,'gdacs:todate', 'link']]
         
-        df_html = """\
+
+        
+        subject = "Test email GDACS"
+        cc = ['huruiz@unicef.org','hugo.ruiz.verastegui@gmail.com']
+        body = "Dear Anthony, \n I hope you are doing great and that Vientiane's croissants are exquisite \n We just identified some new high intensity disaster in the East Asia Pacific Region and we would like to start the generation of the Population/ Movements/ Connectivity datasets for the following disaster(s): "
+        sender = "unicef.data.eapro@gmail.com"
+        recipients = ["huruiz@unicef.org"]
+        password = "svdh gonx kfch jahb" 
+
+        df_html = body + """\
         <html>
           <head></head>
           <body>
@@ -477,16 +486,8 @@ def get_latest_disasters_rss():
         </html>
         """.format(latest_critical_disasters_email.to_html())
         
-        subject = "Test email GDACS"
-        cc = ['huruiz@unicef.org','hugo.ruiz.verastegui@gmail.com']
-        body = "Dear Anthony, \n I hope you are doing great and that Vientiane's croissants are exquisite \n We just identified some new high intensity disaster in the East Asia Pacific Region and we would like to start the generation of the Population/ Movements/ Connectivity datasets for the following disaster(s): "
-        sender = "unicef.data.eapro@gmail.com"
-        recipients = ["huruiz@unicef.org"]
-        password = "svdh gonx kfch jahb" 
-    
         msg = MIMEMultipart()
         #msg = MIMEText(body)
-        msg.attach(body)
         table = MIMEText(df_html, 'html')
         msg.attach(table)
         msg['Subject'] = subject
