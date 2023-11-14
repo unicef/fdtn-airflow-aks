@@ -487,7 +487,9 @@ def get_latest_disasters_rss():
         """.format(latest_critical_disasters_email.to_html())
         
         msg = MIMEMultipart()
-        #msg = MIMEText(body)
+        body = MIMEText(body)
+        msg.attach(body)        
+        
         table = MIMEText(df_html, 'html')
         msg.attach(table)
         msg['Subject'] = subject
