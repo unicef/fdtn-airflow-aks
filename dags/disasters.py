@@ -435,6 +435,14 @@ def get_latest_disasters_rss():
     #drop the h3_list column in summary df
     summary.drop(columns=['h3_list'], inplace=True)    
 
+    #empty the /tmp folder before saving the latest csvs 
+    files_tmp_csv = glob.glob('/tmp/*.csv')
+    
+    print("tmp files csv:")
+    print(files_tmp_csv)
+    for f in files_tmp_csv:
+        os.remove(f)
+    
     summary.to_csv('/tmp/latest_disasters.csv', index=False)
     df_hex.to_csv('/tmp/latest_disasters_hex.csv', index=False)
     print(summary.head())
