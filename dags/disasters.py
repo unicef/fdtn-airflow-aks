@@ -440,8 +440,9 @@ def get_latest_disasters_rss():
     
     print("tmp files csv:")
     print(files_tmp_csv)
-    for f in files_tmp_csv:
-        os.remove(f)
+
+    #for f in files_tmp_csv:
+    #    os.remove(f)
     
     summary.to_csv('/tmp/latest_disasters.csv', index=False)
     df_hex.to_csv('/tmp/latest_disasters_hex.csv', index=False)
