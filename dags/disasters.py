@@ -472,7 +472,7 @@ def get_latest_disasters_rss():
         
         subject = "Test email GDACS"
         cc = ['huruiz@unicef.org','hugo.ruiz.verastegui@gmail.com']
-        body = "Dear Anthony, \n I hope you are doing great and that Vientiane's croissants are exquisite \n We just identified some new high intensity disaster in the East Asia Pacific Region and we would like to start the generation of the Population/ Movements/ Connectivity datasets for the following disaster(s): "
+        body = "Dear Anthony, \n I hope you are doing great and that Vientiane's croissants are exquisite \n We just identified some new high intensity disaster in the East Asia Pacific Region and we would like to start the generation of the Population/ Movements/ Connectivity datasets for the following disaster(s):  \n "
         sender = "unicef.data.eapro@gmail.com"
         recipients = ["huruiz@unicef.org"]
         password = "svdh gonx kfch jahb" 
@@ -490,8 +490,6 @@ def get_latest_disasters_rss():
         body = MIMEText(body + df_html, 'html')
         msg.attach(body)        
         
-        table = MIMEText(df_html, 'html')
-        msg.attach(table)
         msg['Subject'] = subject
         msg['From'] = sender
         msg['To'] = ', '.join(recipients)
