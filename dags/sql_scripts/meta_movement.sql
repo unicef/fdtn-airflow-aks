@@ -96,6 +96,16 @@ else  n_difference *( hrsl_population/n_baseline )
 end 
 as n_difference_scaled
 
+,case when n_difference > 0
+then n_difference 
+else 0
+end  as n_difference_positive
+
+,case when n_difference < 0
+then n_difference 
+else 0
+end  as n_difference_negative
+
 from public.meta_population_crisis_adm2 mpca
 
 left join max_date_table md 
