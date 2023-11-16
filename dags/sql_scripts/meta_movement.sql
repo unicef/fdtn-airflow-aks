@@ -8,6 +8,16 @@ INSERT INTO public.meta_population_crisis_adm2 (
 with population_meta_grouped_h308 as (
 
 select disaster_id, disaster_name, country, h3_08, date, date_time, sum(n_baseline) as n_baseline, sum(n_crisis) as n_crisis, sum(n_difference) as n_difference
+,sum(case when n_difference > 0
+then n_difference 
+else 0
+end)  as n_difference_positive
+
+,sum(case when n_difference < 0
+then n_difference 
+else 0
+end)  as n_difference_negative
+
 FROM private.meta_population_crisis_h308 mpch
 group by 1,2,3,4,5,6
 
@@ -42,6 +52,10 @@ SELECT pmjh.disaster_id
 ,sum(pmjh.n_baseline) as n_baseline
 ,sum(pmjh.n_crisis) as n_crisis
 ,sum(pmjh.hrsl_population) as hrsl_population
+,sum(pmjh.n_difference_positive) as n_difference_positive
+,sum(pmjh.n_difference_negative) as n_difference_negative
+
+
 
 FROM population_meta_joined_hrsl pmjh
 
@@ -52,6 +66,11 @@ group by 1,2,3,4,5,6,7,8,9,10,11
 select * from population_joined_adm ); 
 
 CREATE INDEX ON public.meta_population_crisis_adm2(adm2) ;
+
+
+--- 
+
+
 
 ---- mapping meta/gdacs events / keep only the latest date 
 
@@ -96,15 +115,8 @@ else  n_difference *( hrsl_population/n_baseline )
 end 
 as n_difference_scaled
 
-,case when n_difference > 0
-then n_difference 
-else 0
-end  as n_difference_positive
-
-,case when n_difference < 0
-then n_difference 
-else 0
-end  as n_difference_negative
+,n_difference_positive
+,n_difference_negative
 
 from public.meta_population_crisis_adm2 mpca
 
