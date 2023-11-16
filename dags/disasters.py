@@ -1,5 +1,3 @@
-#test update auto 5
-
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
@@ -8,7 +6,7 @@ from datetime import date, datetime, timedelta
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 
 import os 
-import glob
+import glob 
 
 import smtplib
 from email.mime.text import MIMEText
