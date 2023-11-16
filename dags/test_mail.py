@@ -35,6 +35,11 @@ default_args={
 
 def send_email_function():
     test=os.getenv('REQUEST_MAIL_META_FROM')
+    print(os.getenv('REQUEST_MAIL_META_CC'))
+    print(os.getenv('REQUEST_MAIL_META_FROM'))
+    print(os.getenv('REQUEST_MAIL_META_TO'))
+    print(os.getenv('REQUEST_MAIL_META_APP_PASSWORD'))
+    
     print("-----")
     print("-----")
     
