@@ -21,6 +21,7 @@ load_dotenv()
 #define the connection id to postres
 POSTGRES_CONN_ID="postgres_datafordecision"
 
+
 ## Arguments applied to the tasks, not the DAG in itself 
 default_args={
     'owner':'airflow',
@@ -33,7 +34,7 @@ default_args={
 
 
 def send_email_function():
-    print(str.encode(os.environ["REQUEST_MAIL_META_TO"]))
+    print(str.encode(os.environ["REQUEST_MAIL_META_FROM"]))
 
 
 with DAG(
