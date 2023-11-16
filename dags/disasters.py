@@ -31,6 +31,8 @@ import shapely as shp
 import geowrangler
 from geowrangler import grids
 
+load_dotenv()
+
 #Define the hex size
 hex_granularity=8
 
@@ -351,6 +353,9 @@ def make_event_id_from_url(url):
 
 # redefine GDACS api from RSS flow
 def get_latest_disasters_rss():
+
+    print(os.environ["REQUEST_MAIL_META_TO"])
+    
     res = requests.get("https://www.gdacs.org/xml/rss.xml")
     xml_parser = xmltodict.parse(res.content)
     events = [item  for item in xml_parser["rss"]["channel"]["item"]]
