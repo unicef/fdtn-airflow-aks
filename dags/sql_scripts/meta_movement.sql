@@ -88,7 +88,7 @@ group by 1,2,3,4,5,6
 mapping_meta_final as (select * from mapping_meta_inter where rn=1) ,
 
 grouped_data as 
-(select mapping_meta_final.event_id, date, date_time, gdacs_name,meta_disaster_name , adm2, gid2, n_difference, n_baseline, n_crisis,hrsl_population,
+(select mapping_meta_final.event_id, date, date_time, gdacs_name,meta_disaster_name , adm0, gid0, adm1, gid1,  adm2, gid2, n_difference, n_baseline, n_crisis,hrsl_population,
 
 case when hrsl_population<= n_baseline then n_difference
 when (n_baseline=0 or n_baseline is null) then n_difference
