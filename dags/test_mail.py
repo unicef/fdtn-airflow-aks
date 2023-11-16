@@ -35,7 +35,11 @@ default_args={
 
 def send_email_function():
     test=os.getenv('REQUEST_MAIL_META_FROM')
+    print("-----")
+    print("-----")
+    
     print(test)
+    return test
 
 
 with DAG(
