@@ -14,6 +14,7 @@ from airflow.operators.email_operator import EmailOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 
+import os
 from dotenv import load_dotenv
 load_dotenv()
 
