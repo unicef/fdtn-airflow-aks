@@ -453,7 +453,7 @@ def get_latest_disasters_rss():
 
     #keep only the critical and recent disasters from GDACS
     summary['gdacs:alertscore']=summary['gdacs:alertscore'].astype(float)
-    latest_critical_disasters=summary[summary['gdacs:alertscore']>=0.5]
+    latest_critical_disasters=summary[summary['gdacs:alertscore']>=2.5]
 
     #Get the list of already requested disasters 
     hook = PostgresHook(postgres_conn_id=POSTGRES_CONN_ID)
@@ -465,10 +465,10 @@ def get_latest_disasters_rss():
     #send email only if there is a new critical disaster
     if len(latest_critical_disasters)>0:      
         #keep only relevant columns to be sent via email
-        latest_critical_disasters_email=latest_critical_disasters[['gdacs:eventid', 'htmldescription', 'gdacs:country','gdacs:fromdate' ,'gdacs:todate', 'link']]
-        
+        latest_critical_disasters_email=latest_critical_disasters[['htmldescription', 'gdacs:country','gdacs:fromdate' ,'gdacs:todate', 'link']]
 
-        
+        latest_critical_disasters_email=latest_critical_disasters_email.rename(columns={"htmldescription": "Disaster", "gdacs:country" : "Impacted countries", "gdacs:fromdate": "From date" , "gdacs:todate": "To date"  , "link": "Gdacs link"})
+                
         subject = "Test email GDACS"
         cc = json.loads(os.getenv('REQUEST_MAIL_META_CC'))
         body = "Dear Anthony, <br> <br> I hope you are doing great and that Vientiane's croissants are exquisite <br> We just identified some new high intensity disaster in the East Asia Pacific Region and we would like to start the generation of the Population/ Movements/ Connectivity datasets for the following disaster(s):  <br> <br> "
