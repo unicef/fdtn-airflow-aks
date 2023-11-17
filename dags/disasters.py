@@ -500,7 +500,7 @@ def get_latest_disasters_rss():
         print("Message sent!")
         
         #add the time stamp for the date the mail was sent 
-        latest_critical_disasters_email['date_asked']=today_date
+        latest_critical_disasters['date_asked']=today_date
         
         # Save the table into a csv to be uploaded into SQL in a second step 
         latest_critical_disasters.to_csv('/tmp/latest_critical_disasters.csv', index=False)       
