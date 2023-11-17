@@ -470,10 +470,10 @@ def get_latest_disasters_rss():
 
         
         subject = "Test email GDACS"
-        cc = os.getenv('REQUEST_MAIL_META_CC')
+        cc = json.loads(os.getenv('REQUEST_MAIL_META_CC'))
         body = "Dear Anthony, <br> <br> I hope you are doing great and that Vientiane's croissants are exquisite <br> We just identified some new high intensity disaster in the East Asia Pacific Region and we would like to start the generation of the Population/ Movements/ Connectivity datasets for the following disaster(s):  <br> <br> "
         sender = os.getenv('REQUEST_MAIL_META_FROM')
-        recipients = os.getenv('REQUEST_MAIL_META_TO')
+        recipients = json.loads(os.getenv('REQUEST_MAIL_META_TO'))
         password = os.getenv('REQUEST_MAIL_META_APP_PASSWORD')
 
         df_html = """\
