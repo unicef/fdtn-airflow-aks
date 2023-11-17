@@ -453,7 +453,7 @@ def get_latest_disasters_rss():
 
     #keep only the critical and recent disasters from GDACS
     summary['gdacs:alertscore']=summary['gdacs:alertscore'].astype(float)
-    latest_critical_disasters=summary[summary['gdacs:alertscore']>=2.5]
+    latest_critical_disasters=summary[summary['gdacs:alertscore']>=0.5]
 
     #Get the list of already requested disasters 
     hook = PostgresHook(postgres_conn_id=POSTGRES_CONN_ID)
@@ -465,6 +465,7 @@ def get_latest_disasters_rss():
     #send email only if there is a new critical disaster
     if len(latest_critical_disasters)>0:      
         #keep only relevant columns to be sent via email
+        latest_critical_disasters=latest_critical_disasters[['gdacs:eventid','htmldescription', 'gdacs:country','gdacs:fromdate' ,'gdacs:todate', 'link']]
         latest_critical_disasters_email=latest_critical_disasters[['htmldescription', 'gdacs:country','gdacs:fromdate' ,'gdacs:todate', 'link']]
 
         latest_critical_disasters_email=latest_critical_disasters_email.rename(columns={"htmldescription": "Disaster", "gdacs:country" : "Impacted countries", "gdacs:fromdate": "From date" , "gdacs:todate": "To date"  , "link": "Gdacs link"})
@@ -502,7 +503,7 @@ def get_latest_disasters_rss():
         latest_critical_disasters_email['date_asked']=today_date
         
         # Save the table into a csv to be uploaded into SQL in a second step 
-        latest_critical_disasters_email.to_csv('/tmp/latest_critical_disasters_email.csv', index=False)       
+        latest_critical_disasters.to_csv('/tmp/latest_critical_disasters.csv', index=False)       
 
 
     
@@ -519,7 +520,7 @@ def pg_extract_hex(copy_sql):
 
 def pg_extract_requests(copy_sql):
   pg_hook = PostgresHook.get_hook(POSTGRES_CONN_ID)
-  pg_hook.copy_expert(copy_sql, '/tmp/latest_critical_disasters_email.csv')
+  pg_hook.copy_expert(copy_sql, '/tmp/latest_critical_disasters.csv')
  
 
 with DAG(
