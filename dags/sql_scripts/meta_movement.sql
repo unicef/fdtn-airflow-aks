@@ -129,7 +129,9 @@ on mpca.disaster_id=mapping_meta_final.meta_disaster_id
 
 where mpca.date_time = md.max_date )
 
-select * from grouped_data
+select gd.*, geometry from grouped_data gd
+LEFT JOIN public.eapro_adm2 ea 
+ON gd.gid2 =ea."GID_2"
 
 );
 CREATE INDEX ON public.meta_population_crisis_formatted(adm2)
