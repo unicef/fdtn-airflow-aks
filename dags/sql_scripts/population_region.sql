@@ -4,7 +4,7 @@
 
 TRUNCATE population_by_region_wp;
 
-INSERT INTO population_by_region (
+INSERT INTO population_by_region_wp (
 SELECT disasters_hex.event_id ,
 
 adm2_hex.gid0 AS gid0,
