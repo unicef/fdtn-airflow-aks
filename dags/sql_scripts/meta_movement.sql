@@ -74,15 +74,19 @@ CREATE INDEX ON public.meta_population_crisis_adm2(adm2) ;
 
 ---- mapping meta/gdacs events / keep only the latest date 
 
-TRUNCATE public.meta_population_crisis_formatted;
+TRUNCATE public.meta_population_crisis_slider_formatted;
 
-INSERT INTO public.meta_population_crisis_formatted(
-with max_date_table as (
-select disaster_id
-, max(date_time) as max_date
+INSERT INTO public.meta_population_crisis_slider_formatted(
+
+with max_time_per_date_table as (
+
+select disaster_id, date, date_time, gid0, gid1, gid2 
+,row_number() over( partition by disaster_id, gid0, gid1, gid2 ,date order by date_time desc ) as rn
 from public.meta_population_crisis_adm2
-group by 1
+group by 1,2,3,4,5,6
+
 ),
+
 
 mapping_meta_inter as (
 select dh.event_id, d.name as gdacs_name,  d.fromdate, d.todate, mpch.disaster_id as meta_disaster_id, mpch.disaster_name as meta_disaster_name ,count(*) as occurences
@@ -107,7 +111,7 @@ group by 1,2,3,4,5,6
 mapping_meta_final as (select * from mapping_meta_inter where rn=1) ,
 
 grouped_data as 
-(select mapping_meta_final.event_id, date, date_time, gdacs_name,meta_disaster_name , adm0, gid0, adm1, gid1,  adm2, gid2, n_difference, n_baseline, n_crisis,hrsl_population,
+(select mapping_meta_final.event_id, mpca.date, mpca.date_time, gdacs_name,meta_disaster_name , mpca.adm0, mpca.gid0, mpca.adm1, mpca.gid1,  mpca.adm2, mpca.gid2, n_difference, n_baseline, n_crisis,hrsl_population,
 
 case when hrsl_population<= n_baseline then n_difference
 when (n_baseline=0 or n_baseline is null) then n_difference
@@ -120,17 +124,24 @@ as n_difference_scaled
 
 from public.meta_population_crisis_adm2 mpca
 
-left join max_date_table md 
-on md.disaster_id=mpca.disaster_id
+
+left join max_time_per_date_table md 
+on md.disaster_id=mpca.disaster_id 
+and md.gid0 = mpca.gid0
+and md.gid1 = mpca.gid1
+and md.gid2 = mpca.gid2
+and md.date_time = mpca.date_time
+
+
 
 left join mapping_meta_final
 on mpca.disaster_id=mapping_meta_final.meta_disaster_id
 
 
-where mpca.date_time = md.max_date )
+where md.rn=1 )
 
 select gd.* from grouped_data gd
 
 
 );
-CREATE INDEX ON public.meta_population_crisis_formatted(adm2)
+CREATE INDEX ON public.meta_population_crisis_slider_formatted(adm2)
