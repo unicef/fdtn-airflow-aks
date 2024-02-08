@@ -16,6 +16,13 @@ eapro_adm2."NAME_1" AS "NAME_1",
 adm2_hex.gid2 AS gid2,
 eapro_adm2."NAME_2" AS "NAME_2", 
 coalesce(sum(pc.children_under_1),0) AS children_under_1, 
+
+coalesce(sum(pc.children_0_4),0) AS children_0_4, 
+coalesce(sum(pc.children_5_14),0) AS children_5_14, 
+coalesce(sum(pc.children_14_19),0) AS children_14_19, 
+coalesce(sum(pc.boys_0_19),0) AS boys_0_19, 
+coalesce(sum(pc.girls_0_19),0) AS girls_0_19, 
+
 coalesce(sum(pc.children_1_4),0) AS children_1_4, 
 coalesce(sum(pc.children_5_19),0) AS children_5_19, 
 coalesce(sum(pc.children_0_19),0) as children_0_19, 
