@@ -138,9 +138,23 @@ left join mapping_meta_final
 on mpca.disaster_id=mapping_meta_final.meta_disaster_id
 
 
-where md.rn=1 )
+where md.rn=1 ), 
 
-select gd.* from grouped_data gd
+-- make sure we have all days x all adm2 to have a consistent data structure for the slider fin the front end 
+
+all_days as (select event_id, "date" from grouped_data group by 1,2), 
+
+all_adm2 as (select event_id, adm0, gid0, adm1, gid1,  adm2, gid2 from grouped_data group by 1,2,3,4,5,6,7),
+
+all_days_adm2 as (select all_days."date", all_adm2.*  from all_days left join all_adm2 on all_days.event_id = all_adm2.event_id)
+
+
+
+select ad.event_id,ad."date", gd.date_time, gd.gdacs_name, gd.meta_disaster_name, ad.adm0, ad.gid0, ad.adm1, ad.gid1, ad.adm2, ad.gid2,  gd.n_difference, gd.n_baseline, gd.n_crisis,gd.hrsl_population,gd.n_difference_scaled, gd.n_difference_positive, gd.n_difference_negative 
+from all_days_adm2 ad left join grouped_data gd 
+on ad.event_id=gd.event_id and ad.gid2=gd.gid2 and ad.gid1=gd.gid1 and ad.gid0=gd.gid0 and ad."date"=gd."date"
+)
+
 
 
 );
