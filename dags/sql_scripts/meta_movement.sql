@@ -157,5 +157,5 @@ on ad.event_id=gd.event_id and ad.gid2=gd.gid2 and ad.gid1=gd.gid1 and ad.gid0=g
 
 
 
-);
+;
 CREATE INDEX ON public.meta_population_crisis_slider_formatted(adm2)
