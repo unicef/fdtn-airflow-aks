@@ -523,7 +523,7 @@ def send_alert_mail():
 
 
  # keep only the disasters that tick some criterias: Orange disasters or disasters impacting Myanmar or PNG 
- df_recent_disasters=df_recent_disasters[df_recent_disasters['htmldescription'].str.contains("Red|Orange|Papua|Myanmar|papua|myanmar|red|orange")]
+  df_recent_disasters=df_recent_disasters[df_recent_disasters['htmldescription'].str.contains("Red|Orange|Papua|Myanmar|papua|myanmar|red|orange")]
 
 
   # get the disasters already sent via mail 
