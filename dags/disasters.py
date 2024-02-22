@@ -771,7 +771,7 @@ def pg_extract_requests(copy_sql):
   pg_hook = PostgresHook.get_hook(POSTGRES_CONN_ID)
   pg_hook.copy_expert(copy_sql, '/tmp/latest_critical_disasters.csv')
  
- def pg_extract_mail_emergency(copy_sql):
+def pg_extract_mail_emergency(copy_sql):
   pg_hook = PostgresHook.get_hook(POSTGRES_CONN_ID)
   pg_hook.copy_expert(copy_sql, '/tmp/update_emergency_mail.csv')
  
