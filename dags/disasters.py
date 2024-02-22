@@ -815,7 +815,7 @@ with DAG(
         )
 
 
-         fill_emergency_mails_table = PythonOperator(
+        fill_emergency_mails_table = PythonOperator(
             task_id="fill_emergency_mail_table",
             python_callable=pg_extract_mail_emergency,
             op_kwargs={
