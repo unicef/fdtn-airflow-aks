@@ -1,5 +1,4 @@
 import airflow 
-from datetime import timedelta 
 from airflow import DAG 
 
 import smtplib
