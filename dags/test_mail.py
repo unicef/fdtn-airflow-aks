@@ -285,7 +285,6 @@ def send_email_function():
    # Save the table into a csv to be uploaded into SQL in a second step 
     df_recent_disasters.to_csv('/tmp/update_emergency_mail.csv', index=False)  
 
- return 
 
 with DAG(
     ## MANDATORY 
