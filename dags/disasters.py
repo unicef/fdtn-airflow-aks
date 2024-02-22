@@ -530,7 +530,7 @@ def send_alert_mail():
   df_already_sent = hook.get_pandas_df(sql="select event_id from public.emergency_update_mail group by 1 ;")
 
   # Remove the disasters that have already had an email sent 
-  df_recent_disasters= df_recent_disasters[~ df_recent_disasters['eventid'].isin(list(df_already_requested['event_id']))] 
+  df_recent_disasters= df_recent_disasters[~ df_recent_disasters['event_id'].isin(list(df_already_requested['event_id']))] 
 
 
 
