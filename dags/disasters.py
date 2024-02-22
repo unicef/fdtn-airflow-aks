@@ -571,7 +571,7 @@ def send_alert_mail():
 
         limited_disaster_name=name_disaster_str[:name_disaster_str.find("at:")]
 
-
+        
 
         # define the html string to be used in the mail
 
@@ -751,13 +751,11 @@ def send_alert_mail():
             smtp_server.login(sender, password)
             smtp_server.sendmail(sender, recipients, msg.as_string())
             
-      #add the time stamp for the date the mail was sent 
-      df_recent_disasters['date_sent']=date.today()
+    #add the time stamp for the date the mail was sent 
+    df_recent_disasters['date_sent']=date.today()
 
-      # Save the table into a csv to be uploaded into SQL in a second step 
-      df_recent_disasters.to_csv('/tmp/update_emergency_mail.csv', index=False)  
-    return 
-
+    # Save the table into a csv to be uploaded into SQL in a second step 
+    df_recent_disasters.to_csv('/tmp/update_emergency_mail.csv', index=False)  
 
 
 
