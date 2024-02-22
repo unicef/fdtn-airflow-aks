@@ -280,10 +280,10 @@ def send_email_function():
          smtp_server.sendmail(sender, recipients, msg.as_string())
 
    #add the time stamp for the date the mail was sent 
-   df_recent_disasters['date_asked']=date.today()
+    df_recent_disasters['date_SENT']=date.today()
 
    # Save the table into a csv to be uploaded into SQL in a second step 
-   df_recent_disasters.to_csv('/tmp/update_emergency_mail.csv', index=False)  
+    df_recent_disasters.to_csv('/tmp/update_emergency_mail.csv', index=False)  
 
  return 
 
