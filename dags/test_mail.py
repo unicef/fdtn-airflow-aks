@@ -3,7 +3,7 @@
 import airflow 
 from datetime import timedelta 
 from airflow import DAG 
-from datetime import datetime, timedelta 
+from datetime import datetime, timedelta , date
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
