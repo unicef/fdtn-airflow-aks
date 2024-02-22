@@ -800,7 +800,7 @@ with DAG(
         )
 
 
-         send_emergency_mail = PythonOperator(
+        send_emergency_mail = PythonOperator(
             task_id="send_emergency_mail",
             python_callable=send_alert_mail
             )
