@@ -1,11 +1,12 @@
 import airflow 
 from datetime import timedelta 
 from airflow import DAG 
-from datetime import datetime, timedelta 
+
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
+from datetime import date, datetime, timedelta
 
 from airflow.operators.python_operator import PythonOperator 
 from airflow.operators.email_operator import EmailOperator
