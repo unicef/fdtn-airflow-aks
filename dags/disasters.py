@@ -734,7 +734,7 @@ def send_alert_mail():
       # send the mail 
         subject = f"Natural disaster update - {limited_disaster_name}"
         cc = "huruiz@unicef.org"
-        body = html_code
+        body = html_str_mail
         sender = os.getenv('REQUEST_MAIL_META_FROM')
         recipients = json.loads('["huruiz@unicef.org","huruiz@unicef.org"]')
         password = os.getenv('REQUEST_MAIL_META_APP_PASSWORD')
