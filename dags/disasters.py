@@ -538,49 +538,44 @@ def send_alert_mail():
   # send an email for each disaster in the list  
   if len(df_recent_disasters)>0:   
     for event_id in df_recent_disasters['event_id']:
-
-      # get the impacted popualtion figures 
-
-
-      sql_query_pop= f"""SELECT  sum(general) as general
-      , sum(children_0_19) as children_0_19
-      , sum(children_under_1) as children_under_1
-      , sum(children_0_4) as children_0_4
-      , sum(children_5_14) as children_5_14
-      , sum(children_14_19) as children_14_19
-      , sum(boys_0_19) as boys_0_19
-      , sum(girls_0_19) as girls_0_19
-      , sum(women) as women
-      from public.population_by_region_wp WHERE event_id = {event_id} 
-      """
+        # get the impacted popualtion figures 
+        sql_query_pop= f"""SELECT  sum(general) as general
+          , sum(children_0_19) as children_0_19
+          , sum(children_under_1) as children_under_1
+          , sum(children_0_4) as children_0_4
+          , sum(children_5_14) as children_5_14
+          , sum(children_14_19) as children_14_19
+          , sum(boys_0_19) as boys_0_19
+          , sum(girls_0_19) as girls_0_19
+          , sum(women) as women
+          from public.population_by_region_wp WHERE event_id = {event_id} 
+          """
+        population_disaster = hook.get_pandas_df(sql=sql_query_pop )
 
 
-      population_disaster = hook.get_pandas_df(sql=sql_query_pop )
+        sql_query_name = f"""SELECT htmldescription from public.disasters WHERE event_id = {event_id}  """
 
+        name_disaster = hook.get_pandas_df(sql=sql_query_name )
 
-      sql_query_name = f"""SELECT htmldescription from public.disasters WHERE event_id = {event_id}  """
+        general= format(population_disaster ['general'][0])
+        children_0_19= format(population_disaster ['children_0_19'][0])
+        children_under_1= format(population_disaster ['children_under_1'][0])
+        children_0_4= format(population_disaster ['children_0_4'][0])
+        children_under_5= format(population_disaster ['children_under_1'][0]  + population_disaster ['children_0_4'][0])
+        children_5_14= format(population_disaster ['children_5_14'][0])
+        children_14_19= format(population_disaster ['children_14_19'][0])
+        boys_0_19= format(population_disaster ['boys_0_19'][0] )
+        girls_0_19= format(population_disaster ['girls_0_19'][0] )
+        women= format(population_disaster ['women'][0] )
+        name_disaster_str=name_disaster['htmldescription'][0]
 
-      name_disaster = hook.get_pandas_df(sql=sql_query_name )
-
-      general= format(population_disaster ['general'][0])
-      children_0_19= format(population_disaster ['children_0_19'][0])
-      children_under_1= format(population_disaster ['children_under_1'][0])
-      children_0_4= format(population_disaster ['children_0_4'][0])
-      children_under_5= format(population_disaster ['children_under_1'][0]  + population_disaster ['children_0_4'][0])
-      children_5_14= format(population_disaster ['children_5_14'][0])
-      children_14_19= format(population_disaster ['children_14_19'][0])
-      boys_0_19= format(population_disaster ['boys_0_19'][0] )
-      girls_0_19= format(population_disaster ['girls_0_19'][0] )
-      women= format(population_disaster ['women'][0] )
-      name_disaster_str=name_disaster['htmldescription'][0]
-
-      limited_disaster_name=name_disaster_str[:name_disaster_str.find("at:")]
+        limited_disaster_name=name_disaster_str[:name_disaster_str.find("at:")]
 
 
 
-      # define the html string to be used in the mail
+        # define the html string to be used in the mail
 
-      html_str_mail= f"""
+        html_str_mail= f"""
           <div id="intro" class="float-left" style="font-size: 16px" > Hello, <br> 
           We have just identified a recent natural disaster in our region.<br>
           You'll find below a quick summary of the impacted area and population.<br> 
@@ -737,33 +732,31 @@ def send_alert_mail():
           """
 
       # send the mail 
-      subject = f"Natural disaster update - {limited_disaster_name}"
-      cc = "huruiz@unicef.org"
-      body = html_code
-      sender = os.getenv('REQUEST_MAIL_META_FROM')
-      recipients = json.loads('["huruiz@unicef.org","huruiz@unicef.org"]')
-      password = os.getenv('REQUEST_MAIL_META_APP_PASSWORD')
+        subject = f"Natural disaster update - {limited_disaster_name}"
+        cc = "huruiz@unicef.org"
+        body = html_code
+        sender = os.getenv('REQUEST_MAIL_META_FROM')
+        recipients = json.loads('["huruiz@unicef.org","huruiz@unicef.org"]')
+        password = os.getenv('REQUEST_MAIL_META_APP_PASSWORD')
 
 
-      msg = MIMEMultipart("alternative")
-      body = MIMEText(body , 'html')
-      msg.attach(body)        
+        msg = MIMEMultipart("alternative")
+        body = MIMEText(body , 'html')
+        msg.attach(body)        
+        msg['Subject'] = subject
+        msg['From'] = sender
+        msg['To'] = ', '.join(recipients)
+        msg['Cc'] = ', '.join(cc)
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
+            smtp_server.login(sender, password)
+            smtp_server.sendmail(sender, recipients, msg.as_string())
+            
+      #add the time stamp for the date the mail was sent 
+      df_recent_disasters['date_sent']=date.today()
 
-      msg['Subject'] = subject
-      msg['From'] = sender
-      msg['To'] = ', '.join(recipients)
-      msg['Cc'] = ', '.join(cc)
-      with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
-         smtp_server.login(sender, password)
-         smtp_server.sendmail(sender, recipients, msg.as_string())
-
-   #add the time stamp for the date the mail was sent 
-   df_recent_disasters['date_asked']=date.today()
-
-   # Save the table into a csv to be uploaded into SQL in a second step 
-   df_recent_disasters.to_csv('/tmp/update_emergency_mail.csv', index=False)  
-
- return 
+      # Save the table into a csv to be uploaded into SQL in a second step 
+      df_recent_disasters.to_csv('/tmp/update_emergency_mail.csv', index=False)  
+    return 
 
 
 
