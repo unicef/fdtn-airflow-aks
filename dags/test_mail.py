@@ -65,6 +65,7 @@ def send_email_function():
   # send an email for each disaster in the list  
   if len(df_recent_disasters)>0:   
     for event_id in df_recent_disasters['event_id']:
+      print(event_id)
 
       # get the impacted popualtion figures 
 
