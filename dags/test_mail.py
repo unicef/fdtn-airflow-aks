@@ -126,30 +126,33 @@ def send_email_function():
                <div id="main-numba"
                   style="max-width: 200px; padding: 0px 30px; width: 80%;">
                   
-                 <div class="additional-wrapper"
-                  style="width: 150px; 
-                  height: 165px; 
-                  padding: 0px 30px;
-                  background-color: #edf0f0;  
-                  
-                  text-align:center;
-                  margin-bottom: 20px;">
+               <div class="additional-wrapper"
+                style="width: 150px; 
+                height: 130px; 
+                padding: 0px 30px;
+                padding-top: 35px ;
+                background-color: #edf0f0;  
+                text-align:center;
+                margin-bottom: 20px;">
                                           
-                   <b class="align-center format-this-please" style=" font-size: 40px; color: #1CABE2; padding-top: 110px ;vertical-align: middle;"> {general}</b>
-                   <span class="align-center" style="font-size: 20px; text-align:center; padding-top: 100px ;vertical-align: middle; ">Estimated Total Population </span>
+                   <b class="align-center format-this-please" style=" font-size: 40px; color: #1CABE2 "> {general}</b>
+                   <span class="align-center" style="font-size: 20px; text-align:center; ">Estimated Total Population </span>
     
                  </div>
     
                  <div class="additional-wrapper"
                   style="width: 150px; 
-                  height: 165px; 
+                  height: 130px; 
                   padding: 0px 30px;
+                  padding-top:35px ;
+
+
                   background-color: #edf0f0;  
                   text-align:center;
                   margin-bottom: 0px; ">
                                           
-                   <b class="align-center format-this-please" style=" font-size: 40px; color: #1CABE2;padding-top: 110px ;vertical-align: middle;"> {children_0_19}</b>
-                   <span class="align-center" style="font-size: 20px; text-align:center; padding-top: 100px ;vertical-align: middle; ">Estimated Children 0-19 </span>
+                   <b class="align-center format-this-please" style=" font-size: 40px; color: #1CABE2;"> {children_0_19}</b>
+                   <span class="align-center" style="font-size: 20px; text-align:center; ">Estimated Children 0-19 </span>
     
                
                  </div>
@@ -162,92 +165,113 @@ def send_email_function():
                   
                  <div class="additional-wrapper"
                   style="width: 320px; 
-                  height: 40px; 
-                  padding: 0px 20px;
+                  height: 30px; 
+                  padding: 0px 20px; 
+                  padding-top:10px ;
+
+
                   background-color: #edf0f0;  
                   align-items: center;
                   margin-bottom: 12px; ">
                                           
-                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2;padding-top: 25px ;vertical-align: middle; "> {children_under_1}</b>
-                   <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Children Under 1 </span>
+                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2; "> {children_under_1}</b>
+                   <span class="align-center" style="font-size: 18px;">Estimated Children Under 1 </span>
     
                  </div>
     
                  <div class="additional-wrapper"
                   style="width: 320px; 
-                  height: 40px; 
-                  padding: 0px 20px;
+                  height: 30px; 
+                  padding: 0px 20px; 
+                  padding-top:10px ;
+
+
                   background-color: #edf0f0;  
                   align-items: center;
                   margin-bottom: 12px; ">
                                           
-                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ;color: #1CABE2; padding-top: 25px ;vertical-align: middle; "> {children_under_5}</b>
-                   <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Children Under 5 </span>
+                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ;color: #1CABE2;  "> {children_under_5}</b>
+                   <span class="align-center" style="font-size: 18px;">Estimated Children Under 5 </span>
     
                  </div>
     
                  <div class="additional-wrapper"
                   style="width: 320px; 
-                  height: 40px; 
-                  padding: 0px 20px;
+                  height: 30px; 
+                  padding: 0px 20px; 
+                  padding-top:10px ;
+
+
                   background-color: #edf0f0;  
                   align-items: center;
                   margin-bottom: 12px; ">
                                           
-                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2;padding-top: 25px ;vertical-align: middle; ">{children_5_14}</b>
-                   <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Children 5-14 </span>
+                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2; ">{children_5_14}</b>
+                   <span class="align-center" style="font-size: 18px;">Estimated Children 5-14 </span>
     
                  </div>
     
                  <div class="additional-wrapper"
                   style="width: 320px; 
-                  height: 40px; 
-                  padding: 0px 20px;
+                  height: 30px; 
+                  padding: 0px 20px; 
+                  padding-top:10px ;
+
+
                   background-color: #edf0f0;  
                   align-items: center;
                   margin-bottom: 11px; ">
                                           
-                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2;padding-top: 25px ;vertical-align: middle; ">{children_14_19}</b>
-                   <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Children 15-19 </span>
+                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2; ">{children_14_19}</b>
+                   <span class="align-center" style="font-size: 18px;">Estimated Children 15-19 </span>
     
                  </div>
     
                  <div class="additional-wrapper"
                   style="width: 320px; 
-                  height: 40px; 
-                  padding: 0px 20px;
+                  height: 30px; 
+                  padding: 0px 20px; 
+                  padding-top:10px ;
+
+
                   background-color: #edf0f0;  
                   align-items: center;
                   margin-bottom: 11px; ">
                                           
-                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2;padding-top: 25px ;vertical-align: middle; "> {girls_0_19}</b>
-                   <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Girls 0-19</span>
+                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2; "> {girls_0_19}</b>
+                   <span class="align-center" style="font-size: 18px;">Estimated Girls 0-19</span>
     
                  </div>
     
                  <div class="additional-wrapper"
                   style="width: 320px; 
-                  height: 40px; 
-                  padding: 0px 20px;
+                  height: 30px; 
+                  padding: 0px 20px; 
+                  padding-top:10px ;
+
+
                   background-color: #edf0f0;  
                   align-items: center;
                   margin-bottom: 12px; ">
                                           
-                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2;padding-top: 25px ;vertical-align: middle; "> {boys_0_19}</b>
-                   <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Boys 0-19</span>
+                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2; "> {boys_0_19}</b>
+                   <span class="align-center" style="font-size: 18px;">Estimated Boys 0-19</span>
     
                  </div>
     
                  <div class="additional-wrapper"
                   style="width: 320px; 
-                  height: 40px; 
-                  padding: 0px 20px;
+                  height: 30px; 
+                  padding: 0px 20px; 
+                  padding-top:10px ;
+
+
                   background-color: #edf0f0;  
                   align-items: center;
                   margin-bottom: 0px; ">
                                           
-                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ;color: #1CABE2; padding-top: 25px ;vertical-align: middle; "> {women}</b>
-                   <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Women </span>
+                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ;color: #1CABE2;  "> {women}</b>
+                   <span class="align-center" style="font-size: 18px;">Estimated Women </span>
     
                  </div>
     
