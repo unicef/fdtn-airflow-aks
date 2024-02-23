@@ -324,11 +324,11 @@ def send_email_function():
              smtp_server.login(sender, password)
              smtp_server.sendmail(sender, recipients, msg.as_string())
 
-    #add the time stamp for the date the mail was sent 
-    df_recent_disasters['date_sent']=date.today()
+  #add the time stamp for the date the mail was sent 
+  df_recent_disasters['date_sent']=date.today()
 
-    # Save the table into a csv to be uploaded into SQL in a second step 
-    df_recent_disasters.to_csv(f'/tmp/update_emergency_mail_2.csv', index=False)  
+  # Save the table into a csv to be uploaded into SQL in a second step 
+  df_recent_disasters.to_csv(f'/tmp/update_emergency_mail_2.csv', index=False)  
       
 def pg_extract_mail_emergency(copy_sql):
   pg_hook = PostgresHook.get_hook(POSTGRES_CONN_ID)
