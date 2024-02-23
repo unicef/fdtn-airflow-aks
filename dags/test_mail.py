@@ -32,7 +32,12 @@ default_args={
     'retry_delay': timedelta(minutes=1)
 }
 
-
+def format(num):
+    if num > 1000000:
+        if not num % 1000000:
+            return f'{num // 1000000}M'
+        return f'{round(num / 1000000, 1)}M'
+    return f'{num // 1000}K'
 
 def send_email_function():
   hook = PostgresHook(postgres_conn_id=POSTGRES_CONN_ID)
