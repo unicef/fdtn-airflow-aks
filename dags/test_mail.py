@@ -85,206 +85,207 @@ def send_email_function():
 
 
       population_disaster = hook.get_pandas_df(sql=sql_query_pop )
+      #only keep going if there is a population > 0 impacted 
+      if population_disaster ['general'][0] is not None :
 
-
-      sql_query_name = f"""SELECT htmldescription from public.disasters WHERE event_id = {event_id}  """
-
-      name_disaster = hook.get_pandas_df(sql=sql_query_name )
-
-      general= format(population_disaster ['general'][0])
-      children_0_19= format(population_disaster ['children_0_19'][0])
-      children_under_1= format(population_disaster ['children_under_1'][0])
-      children_0_4= format(population_disaster ['children_0_4'][0])
-      children_under_5= format(population_disaster ['children_under_1'][0]  + population_disaster ['children_0_4'][0])
-      children_5_14= format(population_disaster ['children_5_14'][0])
-      children_14_19= format(population_disaster ['children_14_19'][0])
-      boys_0_19= format(population_disaster ['boys_0_19'][0] )
-      girls_0_19= format(population_disaster ['girls_0_19'][0] )
-      women= format(population_disaster ['women'][0] )
-      name_disaster_str=name_disaster['htmldescription'][0]
-
-      limited_disaster_name=name_disaster_str[:name_disaster_str.find("at:")]
-
-
-
-      # define the html string to be used in the mail
-
-      html_str_mail= f"""
-          <div id="intro" class="float-left" style="font-size: 16px" > Hello, <br> 
-          We have just identified a recent natural disaster in our region.<br>
-          You'll find below a quick summary of the impacted area and population.<br> 
-
-          </div>
-
-          <div id="misc-title" class="float-left" style="font-size: 30px; color: #1CABE2 ; padding: 10px" > {name_disaster_str} </div>
-
-          <div id="sitrep" style="display:flex">
-
-          <img src="https://sitrepapistaging.azurewebsites.net/disaster/{event_id}/image.png" alt="img" />
-
-           <div id="main-numba"
-              style="max-width: 200px; padding: 0px 30px; width: 80%;">
-              
-             <div class="additional-wrapper"
-              style="width: 150px; 
-              height: 165px; 
-              padding: 0px 30px;
-              background-color: #edf0f0;  
-              
-              text-align:center;
-              margin-bottom: 20px;">
-                                      
-               <b class="align-center format-this-please" style=" font-size: 40px; color: #1CABE2; padding-top: 110px ;vertical-align: middle;"> {general}</b>
-               <span class="align-center" style="font-size: 20px; text-align:center; padding-top: 100px ;vertical-align: middle; ">Estimated Total Population </span>
-
-             </div>
-
-             <div class="additional-wrapper"
-              style="width: 150px; 
-              height: 165px; 
-              padding: 0px 30px;
-              background-color: #edf0f0;  
-              text-align:center;
-              margin-bottom: 0px; ">
-                                      
-               <b class="align-center format-this-please" style=" font-size: 40px; color: #1CABE2;padding-top: 110px ;vertical-align: middle;"> {children_0_19}</b>
-               <span class="align-center" style="font-size: 20px; text-align:center; padding-top: 100px ;vertical-align: middle; ">Estimated Children 0-19 </span>
-
-           
-             </div>
-
-           </div>
-
-
-          <div id="misc-additional-numba"
-              style="max-width: 300px; padding: 0px 0px; width: 80%;">
-              
-             <div class="additional-wrapper"
-              style="width: 320px; 
-              height: 40px; 
-              padding: 0px 20px;
-              background-color: #edf0f0;  
-              align-items: center;
-              margin-bottom: 12px; ">
-                                      
-               <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2;padding-top: 25px ;vertical-align: middle; "> {children_under_1}</b>
-               <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Children Under 1 </span>
-
-             </div>
-
-             <div class="additional-wrapper"
-              style="width: 320px; 
-              height: 40px; 
-              padding: 0px 20px;
-              background-color: #edf0f0;  
-              align-items: center;
-              margin-bottom: 12px; ">
-                                      
-               <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ;color: #1CABE2; padding-top: 25px ;vertical-align: middle; "> {children_under_5}</b>
-               <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Children Under 5 </span>
-
-             </div>
-
-             <div class="additional-wrapper"
-              style="width: 320px; 
-              height: 40px; 
-              padding: 0px 20px;
-              background-color: #edf0f0;  
-              align-items: center;
-              margin-bottom: 12px; ">
-                                      
-               <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2;padding-top: 25px ;vertical-align: middle; ">{children_5_14}</b>
-               <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Children 5-14 </span>
-
-             </div>
-
-             <div class="additional-wrapper"
-              style="width: 320px; 
-              height: 40px; 
-              padding: 0px 20px;
-              background-color: #edf0f0;  
-              align-items: center;
-              margin-bottom: 11px; ">
-                                      
-               <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2;padding-top: 25px ;vertical-align: middle; ">{children_14_19}</b>
-               <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Children 15-19 </span>
-
-             </div>
-
-             <div class="additional-wrapper"
-              style="width: 320px; 
-              height: 40px; 
-              padding: 0px 20px;
-              background-color: #edf0f0;  
-              align-items: center;
-              margin-bottom: 11px; ">
-                                      
-               <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2;padding-top: 25px ;vertical-align: middle; "> {girls_0_19}</b>
-               <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Girls 0-19</span>
-
-             </div>
-
-             <div class="additional-wrapper"
-              style="width: 320px; 
-              height: 40px; 
-              padding: 0px 20px;
-              background-color: #edf0f0;  
-              align-items: center;
-              margin-bottom: 12px; ">
-                                      
-               <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2;padding-top: 25px ;vertical-align: middle; "> {boys_0_19}</b>
-               <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Boys 0-19</span>
-
-             </div>
-
-             <div class="additional-wrapper"
-              style="width: 320px; 
-              height: 40px; 
-              padding: 0px 20px;
-              background-color: #edf0f0;  
-              align-items: center;
-              margin-bottom: 0px; ">
-                                      
-               <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ;color: #1CABE2; padding-top: 25px ;vertical-align: middle; "> {women}</b>
-               <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Women </span>
-
-             </div>
-
-
-           </div>
-
-
-          </div>
-
-          <div id="link_sitrep" class="float-left" style="font-size: 16px; padding: 10px 0px  10px 0px" > <br> Find out more about this natural disaster here: <a href="https://sitrep-staging.azurewebsites.net/#/sitrep/{event_id}">LINK</a> <br>
-          Meta (Facebook) usually provides Connectivity and Population displacement data for the major disasters - if you need that data and it's not visible on the platform, contact us asap so we can request it to Meta <br>
-          If you have any additional questions, you can also contact Hugo Ruiz Verastegui - huruiz@unicef.org
-          <br><br> Best regards, <br>
-          The EAPRO Frontier Data Tech Node
-          </div>
-
-          """
-
-      # send the mail 
-      subject = f"Natural disaster update - {limited_disaster_name}"
-      cc = "huruiz@unicef.org"
-      body = html_str_mail
-      sender = os.getenv('REQUEST_MAIL_META_FROM')
-      recipients = json.loads('["huruiz@unicef.org","huruiz@unicef.org"]')
-      password = os.getenv('REQUEST_MAIL_META_APP_PASSWORD')
-
-
-      msg = MIMEMultipart("alternative")
-      body = MIMEText(body , 'html')
-      msg.attach(body)        
-
-      msg['Subject'] = subject
-      msg['From'] = sender
-      msg['To'] = ', '.join(recipients)
-      msg['Cc'] = ', '.join(cc)
-      with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
-         smtp_server.login(sender, password)
-         smtp_server.sendmail(sender, recipients, msg.as_string())
+          sql_query_name = f"""SELECT htmldescription from public.disasters WHERE event_id = {event_id}  """
+    
+          name_disaster = hook.get_pandas_df(sql=sql_query_name )
+    
+          general= format(population_disaster ['general'][0])
+          children_0_19= format(population_disaster ['children_0_19'][0])
+          children_under_1= format(population_disaster ['children_under_1'][0])
+          children_0_4= format(population_disaster ['children_0_4'][0])
+          children_under_5= format(population_disaster ['children_under_1'][0]  + population_disaster ['children_0_4'][0])
+          children_5_14= format(population_disaster ['children_5_14'][0])
+          children_14_19= format(population_disaster ['children_14_19'][0])
+          boys_0_19= format(population_disaster ['boys_0_19'][0] )
+          girls_0_19= format(population_disaster ['girls_0_19'][0] )
+          women= format(population_disaster ['women'][0] )
+          name_disaster_str=name_disaster['htmldescription'][0]
+    
+          limited_disaster_name=name_disaster_str[:name_disaster_str.find("at:")]
+    
+    
+    
+          # define the html string to be used in the mail
+    
+          html_str_mail= f"""
+              <div id="intro" class="float-left" style="font-size: 16px" > Hello, <br> 
+              We have just identified a recent natural disaster in our region.<br>
+              You'll find below a quick summary of the impacted area and population.<br> 
+    
+              </div>
+    
+              <div id="misc-title" class="float-left" style="font-size: 30px; color: #1CABE2 ; padding: 10px" > {name_disaster_str} </div>
+    
+              <div id="sitrep" style="display:flex">
+    
+              <img src="https://sitrepapistaging.azurewebsites.net/disaster/{event_id}/image.png" alt="img" />
+    
+               <div id="main-numba"
+                  style="max-width: 200px; padding: 0px 30px; width: 80%;">
+                  
+                 <div class="additional-wrapper"
+                  style="width: 150px; 
+                  height: 165px; 
+                  padding: 0px 30px;
+                  background-color: #edf0f0;  
+                  
+                  text-align:center;
+                  margin-bottom: 20px;">
+                                          
+                   <b class="align-center format-this-please" style=" font-size: 40px; color: #1CABE2; padding-top: 110px ;vertical-align: middle;"> {general}</b>
+                   <span class="align-center" style="font-size: 20px; text-align:center; padding-top: 100px ;vertical-align: middle; ">Estimated Total Population </span>
+    
+                 </div>
+    
+                 <div class="additional-wrapper"
+                  style="width: 150px; 
+                  height: 165px; 
+                  padding: 0px 30px;
+                  background-color: #edf0f0;  
+                  text-align:center;
+                  margin-bottom: 0px; ">
+                                          
+                   <b class="align-center format-this-please" style=" font-size: 40px; color: #1CABE2;padding-top: 110px ;vertical-align: middle;"> {children_0_19}</b>
+                   <span class="align-center" style="font-size: 20px; text-align:center; padding-top: 100px ;vertical-align: middle; ">Estimated Children 0-19 </span>
+    
+               
+                 </div>
+    
+               </div>
+    
+    
+              <div id="misc-additional-numba"
+                  style="max-width: 300px; padding: 0px 0px; width: 80%;">
+                  
+                 <div class="additional-wrapper"
+                  style="width: 320px; 
+                  height: 40px; 
+                  padding: 0px 20px;
+                  background-color: #edf0f0;  
+                  align-items: center;
+                  margin-bottom: 12px; ">
+                                          
+                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2;padding-top: 25px ;vertical-align: middle; "> {children_under_1}</b>
+                   <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Children Under 1 </span>
+    
+                 </div>
+    
+                 <div class="additional-wrapper"
+                  style="width: 320px; 
+                  height: 40px; 
+                  padding: 0px 20px;
+                  background-color: #edf0f0;  
+                  align-items: center;
+                  margin-bottom: 12px; ">
+                                          
+                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ;color: #1CABE2; padding-top: 25px ;vertical-align: middle; "> {children_under_5}</b>
+                   <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Children Under 5 </span>
+    
+                 </div>
+    
+                 <div class="additional-wrapper"
+                  style="width: 320px; 
+                  height: 40px; 
+                  padding: 0px 20px;
+                  background-color: #edf0f0;  
+                  align-items: center;
+                  margin-bottom: 12px; ">
+                                          
+                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2;padding-top: 25px ;vertical-align: middle; ">{children_5_14}</b>
+                   <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Children 5-14 </span>
+    
+                 </div>
+    
+                 <div class="additional-wrapper"
+                  style="width: 320px; 
+                  height: 40px; 
+                  padding: 0px 20px;
+                  background-color: #edf0f0;  
+                  align-items: center;
+                  margin-bottom: 11px; ">
+                                          
+                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2;padding-top: 25px ;vertical-align: middle; ">{children_14_19}</b>
+                   <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Children 15-19 </span>
+    
+                 </div>
+    
+                 <div class="additional-wrapper"
+                  style="width: 320px; 
+                  height: 40px; 
+                  padding: 0px 20px;
+                  background-color: #edf0f0;  
+                  align-items: center;
+                  margin-bottom: 11px; ">
+                                          
+                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2;padding-top: 25px ;vertical-align: middle; "> {girls_0_19}</b>
+                   <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Girls 0-19</span>
+    
+                 </div>
+    
+                 <div class="additional-wrapper"
+                  style="width: 320px; 
+                  height: 40px; 
+                  padding: 0px 20px;
+                  background-color: #edf0f0;  
+                  align-items: center;
+                  margin-bottom: 12px; ">
+                                          
+                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ; color: #1CABE2;padding-top: 25px ;vertical-align: middle; "> {boys_0_19}</b>
+                   <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Boys 0-19</span>
+    
+                 </div>
+    
+                 <div class="additional-wrapper"
+                  style="width: 320px; 
+                  height: 40px; 
+                  padding: 0px 20px;
+                  background-color: #edf0f0;  
+                  align-items: center;
+                  margin-bottom: 0px; ">
+                                          
+                   <b class="align-center format-this-please" style=" font-size: 25px; padding-right: 10px ;color: #1CABE2; padding-top: 25px ;vertical-align: middle; "> {women}</b>
+                   <span class="align-center" style="font-size: 18px;padding-top: 25px ;vertical-align: middle;">Estimated Women </span>
+    
+                 </div>
+    
+    
+               </div>
+    
+    
+              </div>
+    
+              <div id="link_sitrep" class="float-left" style="font-size: 16px; padding: 10px 0px  10px 0px" > <br> Find out more about this natural disaster here: <a href="https://sitrep-staging.azurewebsites.net/#/sitrep/{event_id}">LINK</a> <br>
+              Meta (Facebook) usually provides Connectivity and Population displacement data for the major disasters - if you need that data and it's not visible on the platform, contact us asap so we can request it to Meta <br>
+              If you have any additional questions, you can also contact Hugo Ruiz Verastegui - huruiz@unicef.org
+              <br><br> Best regards, <br>
+              The EAPRO Frontier Data Tech Node
+              </div>
+    
+              """
+    
+          # send the mail 
+          subject = f"Natural disaster update - {limited_disaster_name}"
+          cc = "huruiz@unicef.org"
+          body = html_str_mail
+          sender = os.getenv('REQUEST_MAIL_META_FROM')
+          recipients = json.loads('["huruiz@unicef.org","huruiz@unicef.org"]')
+          password = os.getenv('REQUEST_MAIL_META_APP_PASSWORD')
+    
+    
+          msg = MIMEMultipart("alternative")
+          body = MIMEText(body , 'html')
+          msg.attach(body)        
+    
+          msg['Subject'] = subject
+          msg['From'] = sender
+          msg['To'] = ', '.join(recipients)
+          msg['Cc'] = ', '.join(cc)
+          with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
+             smtp_server.login(sender, password)
+             smtp_server.sendmail(sender, recipients, msg.as_string())
 
    #add the time stamp for the date the mail was sent 
     df_recent_disasters['date_SENT']=date.today()
