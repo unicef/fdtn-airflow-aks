@@ -321,12 +321,15 @@ def send_email_function():
              smtp_server.login(sender, password)
              smtp_server.sendmail(sender, recipients, msg.as_string())
 
-   #add the time stamp for the date the mail was sent 
-    df_recent_disasters['date_SENT']=date.today()
+    #add the time stamp for the date the mail was sent 
+    df_recent_disasters['date_sent']=date.today()
 
-   # Save the table into a csv to be uploaded into SQL in a second step 
+    # Save the table into a csv to be uploaded into SQL in a second step 
     df_recent_disasters.to_csv('/tmp/update_emergency_mail.csv', index=False)  
-
+      
+def pg_extract_mail_emergency(copy_sql):
+  pg_hook = PostgresHook.get_hook(POSTGRES_CONN_ID)
+  pg_hook.copy_expert(copy_sql, '/tmp/update_emergency_mail.csv')
 
 with DAG(
     ## MANDATORY 
@@ -344,5 +347,13 @@ with DAG(
             task_id="send_email_python",
             python_callable=send_email_function
             )
+    
+        fill_emergency_mails_table = PythonOperator(
+                task_id="fill_emergency_mail_table",
+                python_callable=pg_extract_mail_emergency,
+                op_kwargs={
+                    "copy_sql": "COPY emergency_update_mail FROM STDIN WITH CSV HEADER DELIMITER as ','"
+                    }
+            )
 
-        send_email
+        send_email>> fill_emergency_mails_table 
