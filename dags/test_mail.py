@@ -167,7 +167,8 @@ def send_email_function():
                   style="width: 320px; 
                   height: 30px; 
                   padding: 0px 20px; 
-                  padding-top:10px ;
+                  padding-top:5px;
+                  padding-bottom:5px ;
 
 
                   background-color: #edf0f0;  
@@ -183,7 +184,8 @@ def send_email_function():
                   style="width: 320px; 
                   height: 30px; 
                   padding: 0px 20px; 
-                  padding-top:10px ;
+                  padding-top:5px;
+                  padding-bottom:5px ;
 
 
                   background-color: #edf0f0;  
@@ -199,7 +201,8 @@ def send_email_function():
                   style="width: 320px; 
                   height: 30px; 
                   padding: 0px 20px; 
-                  padding-top:10px ;
+                  padding-top:5px;
+                  padding-bottom:5px ;
 
 
                   background-color: #edf0f0;  
@@ -215,7 +218,8 @@ def send_email_function():
                   style="width: 320px; 
                   height: 30px; 
                   padding: 0px 20px; 
-                  padding-top:10px ;
+                  padding-top:5px;
+                  padding-bottom:5px ;
 
 
                   background-color: #edf0f0;  
@@ -231,7 +235,8 @@ def send_email_function():
                   style="width: 320px; 
                   height: 30px; 
                   padding: 0px 20px; 
-                  padding-top:10px ;
+                  padding-top:5px;
+                  padding-bottom:5px ;
 
 
                   background-color: #edf0f0;  
@@ -247,7 +252,8 @@ def send_email_function():
                   style="width: 320px; 
                   height: 30px; 
                   padding: 0px 20px; 
-                  padding-top:10px ;
+                  padding-top:5px;
+                  padding-bottom:5px ;
 
 
                   background-color: #edf0f0;  
@@ -263,7 +269,8 @@ def send_email_function():
                   style="width: 320px; 
                   height: 30px; 
                   padding: 0px 20px; 
-                  padding-top:10px ;
+                  padding-top:5px;
+                  padding-bottom:5px ;
 
 
                   background-color: #edf0f0;  
