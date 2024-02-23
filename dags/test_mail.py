@@ -47,22 +47,23 @@ def send_email_function():
   df_recent_disasters = hook.get_pandas_df(sql="select event_id,  htmldescription, fromdate from public.disasters ;")
 
   date_filter = date.today() - timedelta(days=30)
-  print(date_filter)
   df_recent_disasters=df_recent_disasters[df_recent_disasters["fromdate"]>= date_filter]
 
 
  # keep only the disasters that tick some criterias: Orange disasters or disasters impacting Myanmar or PNG 
   df_recent_disasters=df_recent_disasters[df_recent_disasters['htmldescription'].str.contains("Red|Orange|Papua|Myanmar|papua|myanmar|red|orange")]
 
-  print(df_recent_disasters)
+
 
 
   # get the disasters already sent via mail 
   df_already_sent = hook.get_pandas_df(sql="select event_id from public.emergency_update_mail group by 1 ;")
+  print('df_already_sent ------------------')
   print(df_already_sent)
 
   # Remove the disasters that have already had an email sent 
   df_recent_disasters= df_recent_disasters[~ df_recent_disasters['event_id'].isin(list(df_already_sent['event_id']))] 
+  print('df_recent_disasters ------------------')
   print(df_recent_disasters)
 
 
