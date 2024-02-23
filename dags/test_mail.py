@@ -327,11 +327,11 @@ def send_email_function():
     df_recent_disasters['date_sent']=date.today()
 
     # Save the table into a csv to be uploaded into SQL in a second step 
-    df_recent_disasters.to_csv(f'/tmp/update_emergency_mail_{date_now}.csv', index=False)  
+    df_recent_disasters.to_csv(f'/tmp/update_emergency_mail_2.csv', index=False)  
       
 def pg_extract_mail_emergency(copy_sql):
   pg_hook = PostgresHook.get_hook(POSTGRES_CONN_ID)
-  pg_hook.copy_expert(copy_sql, f'/tmp/update_emergency_mail_{date_now}.csv')
+  pg_hook.copy_expert(copy_sql, f'/tmp/update_emergency_mail_2.csv')
 
 with DAG(
     ## MANDATORY 
