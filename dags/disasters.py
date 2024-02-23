@@ -776,10 +776,10 @@ def send_alert_mail():
     
           # send the mail 
             subject = f"Natural disaster update - {limited_disaster_name}"
-            cc = "huruiz@unicef.org"
+            # cc = json.loads('["tclark@unicef.org","huruiz@unicef.org"]')
             body = html_str_mail
             sender = os.getenv('REQUEST_MAIL_META_FROM')
-            recipients = json.loads('["huruiz@unicef.org","huruiz@unicef.org"]')
+            recipients = json.loads('["tclark@unicef.org","huruiz@unicef.org"]')
             password = os.getenv('REQUEST_MAIL_META_APP_PASSWORD')
     
     
@@ -789,7 +789,7 @@ def send_alert_mail():
             msg['Subject'] = subject
             msg['From'] = sender
             msg['To'] = ', '.join(recipients)
-            msg['Cc'] = ', '.join(cc)
+            # msg['Cc'] = ', '.join(cc)
             with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
                 smtp_server.login(sender, password)
                 smtp_server.sendmail(sender, recipients, msg.as_string())
