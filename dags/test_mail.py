@@ -22,7 +22,7 @@ load_dotenv()
 #define the connection id to postres
 POSTGRES_CONN_ID="postgres_datafordecision"
 
-date_now=datetime.now()
+date_now=str(datetime.now())
 
 ## Arguments applied to the tasks, not the DAG in itself 
 default_args={
