@@ -927,6 +927,12 @@ with DAG(
         sql="sql_scripts/meta_movement.sql"
         )
 
+        create_connectivity_population_table = PostgresOperator(
+        task_id="create_connectivity_population_table",
+        postgres_conn_id="postgres_datafordecision",
+        sql="sql_scripts/connectivity_population.sql"
+        )
+    
         fill_logs_table = PostgresOperator(
         task_id="fill_logs_table",
         postgres_conn_id="postgres_datafordecision",
@@ -936,5 +942,5 @@ with DAG(
     
 
         get_disasters_resources>>create_disasters_table>>fill_disasters_table>>disasters_deduplicate
-        get_disasters_resources>>create_hex_table>>fill_hex_table>>collate_hex_table>>hex_deduplicate>>create_connectivity_table>>create_population_region_table>>create_movement_table>>send_emergency_mail>> fill_emergency_mails_table >>fill_logs_table
+        get_disasters_resources>>create_hex_table>>fill_hex_table>>collate_hex_table>>hex_deduplicate>>create_connectivity_table>>create_population_region_table>>create_movement_table>>send_emergency_mail>> fill_emergency_mails_table >> create_connectivity_population_table >>fill_logs_table
         get_disasters_resources>>fill_requests_table
