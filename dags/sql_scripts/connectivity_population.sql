@@ -1,7 +1,7 @@
 
 TRUNCATE public.population_connectivity_status ;
 
-INSERT INTO public.population_connectivity_status as (    
+INSERT INTO public.population_connectivity_status (    
        
 with event_days_connectivity as (select event_id, date from public.meta_connectivity_test_slider group by 1,2), 
 
